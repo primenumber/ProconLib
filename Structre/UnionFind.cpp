@@ -1,3 +1,9 @@
+/*
+  UnionFind u(100);  // 100要素作る
+  parent(x)          // xの親のid (xが根である場合は-1)
+  root(x)            // xの根のid
+*/
+
 struct UnionFind {
   vector<int> parent;
   UnionFind (int n) { parent.assign(n, -1); }
