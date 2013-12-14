@@ -10,6 +10,12 @@ const ld eps = 1e-8, pi = acos(-1.0);
 ld dot (P a, P b) { return real(conj(a) * b); }
 ld cross (P a, P b) { return imag(conj(a) * b); }
 
+namespace std {
+  bool operator<(const P &lhs, const P &rhs) {
+    return lhs.real() == rhs.real() ? lhs.imag() < rhs.imag() : lhs.real() < rhs.real();
+  }
+}
+
 // Line
 class L{
 public:
