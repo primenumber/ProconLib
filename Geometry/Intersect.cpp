@@ -44,7 +44,7 @@ P mirror(L l, P p) {
 VP is_ll(L s, L t){
   VP v;
   P sv = s.b - s.a, tv = t.b - t.a;
-  if (abs(cross(sv,tv) > 0))
+  if (abs(cross(sv,tv)) > 0)
     v.push_back(s.a + sv * cross(tv, t.a - s.a) / cross(tv, sv));
   return v;
 }
