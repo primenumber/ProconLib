@@ -28,9 +28,9 @@ ll inv(ll a,ll p){
 int combin[][];
 void init(){
   combin[0][0]=1;
-  FOREQ(i,1,*){
+  for(int i=1;i<*;++i){
     combin[i][0]=combin[i][i]=1;
-    FOREQ(j,1,i-1)
+    for(int j=1;j<i-1;++j)
       combin[i][j]=(combin[i-1][j-1]+combin[i-1][j])%MOD;
   }
 }
