@@ -27,7 +27,8 @@ void bellman_ford(Edge &es, vector<Weight> &d, int s) {
 void dijkstra(Graph &g, vector<Weight> &d, int s) {
 	fill(d.begin(), d.end(), INF);
 	d[s] = 0;
-	priority_queue<PII, vector<PII>, greater<PII> > que;
+  typedef pair<Weight,int> P;
+	priority_queue<P, vector<P>, greater<P> > que;
 	que.push(PII(0, s));
 	while (!que.empty()) {
 		Weight dist = que.top().first;
@@ -45,9 +46,10 @@ void dijkstra(Graph &g, vector<Weight> &d, int s) {
 }
 
 //WarshallFloyd
-void warshall_floyd(Matrix &g, vector<Weight> d) {
+Matrix warshall_floyd(Matrix g) {
 	REP(k, g.size()) REP(i, g.size()) REP(j, g.size()) {
-		d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+		g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
 	}
+  return g;
 }
 
