@@ -26,33 +26,32 @@ void bellman_ford(const Edges &es, vector<Weight> &d, int s) {
   }
 }
 
-// Dijkstra (erified: AOJ2005)
+// Dijkstra (Verified: AOJ2005)
 // dの要素数は頂点数と等しくあるべき．
 void dijkstra(Graph &g, vector<Weight> &d, int s) {
-	fill(d.begin(), d.end(), INF);
-	d[s] = 0;
+  fill(d.begin(), d.end(), INF);
+  d[s] = 0;
   typedef pair<Weight,int> P;
-	priority_queue<P, vector<P>, greater<P> > que;
-	que.push(P(0, s));
-	while (!que.empty()) {
-		Weight dist = que.top().first;
-		int v = que.top().second;
-		que.pop();
-		if (d[v] < dist) continue;
-		REP(i, g[v].size()) {
-			Edge e = g[v][i];
-			if (d[e.dest] > d[v] + e.weight) {
-				d[e.dest] = d[v] + e.weight;
-				que.push(P(d[e.dest], e.dest));
-			}
-		}
-	}
+  priority_queue<P, vector<P>, greater<P> > que;
+  que.push(P(0, s));
+  while (!que.empty()) {
+    Weight dist = que.top().first;
+    int v = que.top().second;
+    que.pop();
+    if (d[v] < dist) continue;
+    REP(i, g[v].size()) {
+      Edge e = g[v][i];
+      if (d[e.dest] > d[v] + e.weight) {
+        d[e.dest] = d[v] + e.weight;
+        que.push(P(d[e.dest], e.dest));
+      }
+    }
+  }
 }
 
 // WarshallFloyd
 void warshall_floyd(Matrix &g) {
   int n = g.size();
-	REP(k,n) REP(i,n) REP(j,n)
-		g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
+  REP(k,n) REP(i,n) REP(j,n)
+    g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
 }
-
