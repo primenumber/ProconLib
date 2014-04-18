@@ -10,25 +10,9 @@ typedef vector<Edges> Graph;
 typedef vector<Weight> Array;
 typedef vector<Array> Matrix;
 
-const int INF = 100000000;
-
-// BellmanFord (Verified: AOJ2005)
-// esは辺集合．dの要素数は頂点数と等しくあるべき．
-void bellman_ford(const Edges &es, vector<Weight> &d, int s) {
-  fill(d.begin(), d.end(), INF);
-  d[s] = 0;
-  REP(i, es.size()) {
-    Edge e = es[i];
-    if (d[e.dest] > d[e.src] + e.weight) {
-      d[e.dest] = d[e.src] + e.weight;
-      i = -1;
-    }
-  }
-}
-
 // Dijkstra (Verified: AOJ2005)
 // dの要素数は頂点数と等しくあるべき．
-void dijkstra(Graph &g, vector<Weight> &d, int s) {
+void dijkstra(Graph &g, Array &d, int s) {
   fill(d.begin(), d.end(), INF);
   d[s] = 0;
   typedef pair<Weight,int> P;
@@ -45,6 +29,20 @@ void dijkstra(Graph &g, vector<Weight> &d, int s) {
         d[e.dest] = d[v] + e.weight;
         que.push(P(d[e.dest], e.dest));
       }
+    }
+  }
+}
+
+// BellmanFord (Verified: AOJ2005)
+// esは辺集合．dの要素数は頂点数と等しくあるべき．
+void bellman_ford(const Edges &es, Array &d, int s) {
+  fill(d.begin(), d.end(), INF);
+  d[s] = 0;
+  REP(i, es.size()) {
+    Edge e = es[i];
+    if (d[e.dest] > d[e.src] + e.weight) {
+      d[e.dest] = d[e.src] + e.weight;
+      i = -1;
     }
   }
 }

@@ -1,7 +1,7 @@
 typedef int Weight;
 struct Edge{
   	int src, dest;
-  	int cap, flow, rev;
+  	int cap, rev;
   	Weight weight;
   	bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
@@ -11,11 +11,11 @@ typedef vector<Edges> Graph;
 typedef vector<Weight> Array;
 typedef vector<Array> Matrix;
 
-//FordFulkerson
+//FordFulkerson(O(F|E|))-----------------------------------------------------------
 //ノード数|V|が必要
 void add_edge(Graph &g, int src, int dest, int cap) {
-  G[src].push_back((edge){src, dest, cap, 0, G[to].size(), 0});
-  G[dest].push_back((edge){dest, src, 0, 0, G[from].size() - 1, 0});
+  g[src].push_back((Edge){src, dest, cap, g[dest].size(), 0});
+  g[dest].push_back((Edge){dest, src, 0, g[src].size() - 1, 0});
 }
 
 bool visited[V];
@@ -23,7 +23,7 @@ int dfs(Graph &g, int v, int t, int f) {
 	int (v == t) return f;
 	visited[v] = true;
 	REP(i, g[v].size()) {
-		edge e = g[v][i];
+		Edge e = g[v][i];
 		if (!visited[e.dest] && e.cap > 0) {
 			int d = dfs(g, e.dest, t, min(f, e.cap));
 			if (d > 0) {
@@ -40,14 +40,14 @@ int max_flow(Graph &g, int s, int t) {
 	int flow = 0;
 	for(;;) {
 		memset(visited, 0, sizeof(visited));
-		int f - dfs(g, t, INF);
+		int f = dfs(g, s, t, INF);
 		if (f == 0) return flow;
 		flow += f;
 	}
 }
 
 
-// Dinic
+// Dinic(O|E||V|^2)-------------------------------------------------------------------
 #define RESIDUE(s,t) (cap[s][t]-flow[s][t])
 int augment(const Graph &g, const Matrix &cap, Matrix &flow,
             const vector<int> &level, vector<bool> &finished, int u, int t, int cur) {
@@ -91,53 +91,56 @@ int dinic(const Graph &g, int s, int t) {
   return total;
 }
 
-// BipartiteMatching
-bool augment(const Graph& g, int u, vector<int>& matchTo, vector<bool>& visited) {
-  	if (u < 0) return true;
-  	FOR(e, g[u]) if (!visited[e->dst]) {
-    	visited[e->dst] = true;
-    	if (augment(g, matchTo[e->dst], matchTo, visited)) {
-      		matchTo[e->src] = e->dst;
-      		matchTo[e->dst] = e->src;
-      		return true;
-    	}
-  	}
-  	return false;
-}
-int bipartiteMatching(const Graph& g, int L, Edges& matching) {
-  const int n = g.size();
-  vector<int> matchTo(n, -1);
-  int match = 0;
-  REP(u, L) {
-    vector<bool> visited(n);
-    if (augment(g, u, matchTo, visited)) ++match;
-  }
-  REP(u, L) if (matchTo[u] >= 0) // make explicit matching
-    matching.push_back( Edge(u, matchTo[u]) );
-  return match;
+//Minimum_cost_flow(Dijkstra)--------------------------------------------
+//頂点数Vが必要
+
+int h[V]                 //ポテンシャル
+int dist[V]              //最短距離
+int prevv[V], preve[V];  //直前の辺と頂点
+
+void add_edge(int src, int dest, int cap, int weight) {
+  g[src].pb((Edge){src, dest, cap, g[dest].size(), weight});
+  g[dest].pb((Edge){dest, src, 0, g[src].size() - 1, -weight});
 }
 
-// Bipartite matching(vector)
-
-const int INF = 9999;
-
-void add_edge(vvi &vg, int f, int t) {
-    vg[f].push_back(t);
-    vg[t].push_back(f);
-}
-
-int pair_val[200], dist_val[220];
-bool dfs(vvi &vg, int j, int nil) {
-    if (j == nil) return true;
-    FORIT(it, vg[j]) {
-        if (dist_val[pair_val[*it]] == dist_val[j] + 1 &&
-            dfs(vg, pair_val[*it], nil)) {
-            pair_val[*it] = j, pair_val[j] = *it;
-            return true;
-        }
+int min_cost_flow(int s, int t, int f) {
+  int res = 0;
+  memset(h, 0, sizeof(h));
+  typedef pair<Weight, int> P;
+  while (f > 0) {
+    priority_queue<P, vector<P>, greater<P> > que;
+    fill(dist, dist + V, INF);
+    dist[s] = 0;
+    que.push(P(0, s));
+    while (!que.empty()) {
+      P p = que.top(); que.pop();
+      int v = p.second; 
+      if (dist[v] < p.first) continue;
+        REP(i, g[v].size()) {
+          edge &e = g[v][i];
+          if (e.cap > 0 && dist[e.dest] > dist[v] + e.weight + h[v] - h[e.dest]) {
+            dist[e.dest] = dist[v] + e.weight + h[v] - h[e.dest];
+            prevv[e.dest] = v;
+            preve[e.dest] = i;
+            que.push(P(dist[e.dest], e.dest));
+          }
+       }
     }
-    dist_val[j] = INF;
-    return false;
+    if (dist[t] == INF) return -1;
+    REP(v, V) h[v] += dist[v];
+
+    int d = f;
+    for (int v = t; v != s; v = prevv[v]) d = min(d, g[prevv[v]][preve[v]].cap);
+    f -= d;
+    res += d * h[t];
+    for (int v = t; v != s; v = prevv[v]) {
+      edge &e = g[prevv[v]][preve[v]];
+      e.cap -= d;
+      g[v][e.rev].cap += d;
+    }
+  }
+  return res;
 }
+
 
 
