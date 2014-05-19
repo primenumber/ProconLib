@@ -118,6 +118,44 @@ VP is_sc(C c, L l){
   return res;
 }
 
+// 円と線の接線を返す
+vector<L> tangent_cp(C c, P p) {
+  vector<L> ret;
+  P v = c.p - p;
+  ld d = abs(v);
+  ld l = sqrt(norm(v) - c.r * c.r);
+  if (isnan(l)) { return ret; }
+  P v1 = v * P(l / d,  c.r / d);
+  P v2 = v * P(l / d, -c.r / d);
+  ret.push_back(L(p, p + v1));
+  if (l < eps) return ret;
+  ret.push_back(L(p, p + v2));
+  return ret;
+}
+
+// 円と円の接線
+vector<L> tangent_cc(C c1, C c2) {
+  vector<L> ret;
+  if (abs(c1.p - c2.p) - (c1.r + c2.r) > -eps) {
+    P center = (c1.p * c2.r + c2.p * c1.r) / (c1.r + c2.r);
+    ret = tangent_cp(c1, center);
+  }
+  if (abs(c1.r - c2.r) > eps) {
+    P out = (-c1.p * c2.r + c2.p * c1.r) / (c1.r - c2.r);
+    vector<L> nret = tangent_cp(c1, out);
+    ret.insert(ret.end(), ALL(nret));
+  }
+  else {
+    P v = c2.p - c1.p;
+    v /= abs(v);
+    P q1 = c1.p + v * P(0,  1) * c1.r;
+    P q2 = c1.p + v * P(0, -1) * c1.r;
+    ret.push_back(L(q1, q1 + v));
+    ret.push_back(L(q2, q2 + v));
+  }
+  return ret;
+}
+
 /*
   Polygon
 */
