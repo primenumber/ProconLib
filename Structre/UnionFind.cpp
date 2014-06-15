@@ -1,6 +1,6 @@
 /*
   UnionFind u(100);  // 100要素作る
-  parent(x)          // xの親のid (xが根である場合は-1)
+  parent(x)          // xの親のid (xが根である場合は-rank)
   root(x)            // xの根のid
 */
 
@@ -12,7 +12,8 @@ struct UnionFind {
     x = root(x); y = root(y);
     if (x == y) return false;
     if (parent[y] < parent[x]) swap(x, y);
-    parent[x] += parent[y]; parent[y] = x;
+    if (parent[x] == parent[y]) --parent[x];
+    parent[y] = x;
     return true;
   }
 };
