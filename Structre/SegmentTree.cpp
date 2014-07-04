@@ -38,33 +38,27 @@ struct SegTreeLazy {
   static const int STsize = 1 << MAX_DEPTH;
   Data data[STsize];
   Data lazy[STsize]; int n;
-  void add (int left, int right, Data value);
-  Data sum (int left, int right);
+  void add(int fr, int to, Data val) { upd_sub(fr, to, 2*n-2, 0, n, val); }
+  Data sum(int fr, int to) { sum_sub(fr, to, 2*n-2, 0, n); }
  private:
-  Data update_node (int depth, int index) {
-    data[index] += lazy[index] << depth;
-    lazy[index * 2] += value;
-    lazy[index * 2 + 1] += value;
-  }
-  Data add_impl(int depth, int node, int left, int right, Data value) {
-    int width = 1 << (MAX_DEPTH - depth);
-    int index = node - (1 << depth);
-    int node_left = index * width;
-    int node_mid = node_left + (width >> 1);
-    Data added;
-    if (right - left + 1 == width && left == node_left) {
-      lazy[node] += value;
-      return value * width;
-    } else if (right < node_mid) {
-      added = add_impl(depth + 1, node * 2, left, right, value);
-    } else if (left >= node_mid) {
-      added = add_impl(depth + 1, node * 2 + 1, left, right, value);
-    } else {
-      added = add_impl(depth + 1, node * 2, left, right, value) +
-              add_impl(depth + 2, node * 2 + 1, left, right, value);
+  void upd_sub(int fr, int to, int node, int la, int ra, Data val) {
+    if (ra<=fr || to<=la) return;
+    if (fr<=la && ra<=to) {
+      lazy[node] += val; return;
     }
-    data[node] += added;
-    return added;
+    upd_sub(fr, to, (node-n)*2+0, la, (la+ra)/2);
+    upd_sub(fr, to, (node-n)*2+1, (la+ra)/2, ra);
+  }
+  Data sum_sub(int fr, int to, int node, int la, int ra) {
+    if (ra<=fr || to<=la) return Data();
+    if (fr<=la && ra<=to) return data[node] + lazy[node]*(ra-la);
+    lazy[(node-n)*2+0] += lazy[node];
+    lazy[(node-n)*2+1] += lazy[node];
+    data[node] += lazy[node]*(ra-la);
+    lazy[node] = 0;
+    Data vl = sum_sub(fr, to, (node-n)*2+0, la, (la+ra)/2);
+    Data vr = sum_sub(fr, to, (node-n)*2+1, la, (la+ra)/2);
+    return vl+vr;
   }
 };
 
@@ -74,24 +68,22 @@ Seg2D{
   int n;
   SegmentTree data[STsize];
   Seg2D() : n(STsize / 2) {}
-  Data sub(
+  void update (int posi, int posj, Data value) {
+    data[posi].update(posj.value);
+    while (posi < 2*n-1) {
+      int l = posi, r = posi^1;
+      posi = posi / 2 + n;
+      data[posi].update(posj,Merge(data[l], data[r]));
+    }
+  }
+  Data sub(int T, int B, int L, int R, int node, int la, int ra){
+    if (ra<=T || B<=la) return Data();
+    if (T<=la && ra<=B) return data[node].query(L,R);
+    Data vl = sub(T, B, L, R, (node-n)*2+0, la, (la+ra)/2);
+    Data vr = sub(T, B, L, R, (node-n)*2+1, (la+ra)/2, ra);
+    return Merge(vl, vr);
+  }
   Data query(int T, int B, int L, int R) {
+    return sub(T,B,L,R,2*n-2,0,n);
   }
 };
-
-/*
-int main() {
-  int n, q, a, b;
-  cin >> n >> q;
-  SegmentTree rmq;
-  for (int i = 0; i < n; i++) {
-    cin >> a;
-    rmq.update(i, Data(a));
-  }
-  for (int i = 0; i < q; i++){
-    cin >> a >> b;
-    cout << rmq.query(a, b).num << endl;
-  }
-  return 0;
-}
-*/
