@@ -97,6 +97,25 @@ VP is_cc(C c1, C c2){
   return res;
 }
 
+// 複数の円の交差判定
+bool isis_vc(vector<C> vc) {
+  VP crs;
+  int n=vc.size();
+  REP(i,n)REP(j,i)
+    for(P p:is_cc(vc[i],vc[j]))
+      crs.push_back(p);
+  REP(i,n)
+    crs.push_back(vc[i].p);
+  for(P p:crs){
+    bool valid=true;
+    REP(i,n)
+      if(abs(p-vc[i].p)>vc[i].r)
+        valid=false;
+    if(valid) return true;
+  }
+  return false;
+}
+
 // 円cと直線lの交点
 VP is_lc(C c, L l){
   VP res;
