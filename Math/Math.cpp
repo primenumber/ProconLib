@@ -56,4 +56,15 @@ ll powmod(ll b,ll i){
   }
 }
 
-
+vector<int> primes(int n) {
+  vector<int> p(n+1, 1);
+  for (int i = 2; i*i <= n; ++i)
+    if (p[i])
+      for (int j = i*i; j <= n; j += i)
+        p[j] = 0;
+  vector<int> res;
+  for (int i = 2; i <= n; ++i)
+    if (p[i])
+      res.push_back(i);
+  return res;
+}
