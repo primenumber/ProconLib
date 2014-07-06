@@ -1,3 +1,6 @@
+
+// Dice
+
 class Dice{
 public:
   int t, r, f;

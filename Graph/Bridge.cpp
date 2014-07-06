@@ -1,3 +1,6 @@
+
+// Bridge
+
 struct Edge{ int src, dest; };
 
 typedef vector<Edge> Edges;
@@ -47,23 +50,3 @@ Edges bridge(const Graph &g) {
   }
   return edges;
 }
-
-/*
-int main(void) {
-  int n, m, s, t;
-  cin >> n >> m;
-  Graph g(n);
-  REP(i,m) {
-    cin >> s >> t;
-    g[s].push_back(Edge{s,t});
-    g[t].push_back(Edge{t,s});
-  }
-  Edges res = bridge(g);
-  vector<pair<int,int>> v;
-  for (auto i : res) v.emplace_back(min(i.src, i.dest), max(i.src, i.dest));
-  sort(v.begin(), v.end());
-  for (auto i : v) cout << i.first << " " << i.second << endl;
-  return 0;
-}
-*/
-

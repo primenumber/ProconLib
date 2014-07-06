@@ -1,3 +1,6 @@
+
+// Articulation Point
+
 #include <vector>
 #include <set>
 
@@ -55,19 +58,3 @@ set<int> articulationPoints(const Graph &g) {
   }
   return art;
 }
-
-/*
-int main(void) {
-  int n, m, s, t;
-  cin >> n >> m;
-  Graph g(n);
-  REP(i,m) {
-    cin >> s >> t;
-    g[s].push_back(Edge{s,t});
-    g[t].push_back(Edge{t,s});
-  }
-  set<int> res = articulationPoints(g);
-  for (auto i : res) cout << i << endl;
-  return 0;
-}
-*/

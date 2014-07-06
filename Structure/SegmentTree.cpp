@@ -1,4 +1,6 @@
 
+// Segment Tree
+
 struct Data {
   int num;
   Data() : num(0x7FFFFFFF) {;}
@@ -31,8 +33,9 @@ struct SegmentTree {
   Data query(int fr, int to) { return sub(fr, to, 2*n-2, 0, n); }
 };
 
-// 遅延評価付き
-// 区間への加算と区間の和
+// Lazy Segment Tree
+// Add to range, Sum of range
+
 struct SegTreeLazy {
   static const int MAX_DEPTH = 18;
   static const int STsize = 1 << MAX_DEPTH;
@@ -65,7 +68,8 @@ struct SegTreeLazy {
   }
 };
 
-// 2次元SegmentTree
+// 2-D SegmentTree
+
 Seg2D{
   static const STsize = 1 << 10;
   int n;

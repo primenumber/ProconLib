@@ -1,3 +1,6 @@
+
+// Square Root Decomposition
+
 typedef int Data;
 
 const int num = 500;
@@ -60,7 +63,7 @@ public:
     if (--renewCount <= 0) { smooth(); renewCount = num; }
     else { renew(pos.first); }
   }
-  void rotate(int l, int r) { // 閉区間で指定
+  void rotate(int l, int r) { // closed interval
     pair<int,int> lpos = place(l), rpos = place(r);
     Data val = dat[rpos.first][rpos.second];
     dat[rpos.first].erase(dat[rpos.first].begin() + rpos.second);
@@ -72,7 +75,7 @@ public:
     pair<int,int> p = place(pos);
     return dat[p.first][p.second];
   }
-  Data minimum(int l, int r) { // 閉区間で指定
+  Data minimum(int l, int r) { // closed interval
     pair<int,int> lpos = place(l), rpos = place(r);
     Data mi = identity;
     if (lpos.first == rpos.first) {

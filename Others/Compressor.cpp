@@ -1,4 +1,6 @@
-// 座標圧縮
+
+// Compressor
+
 typedef int Data;
 vector<int> compressor(vector<Data> c) {
   int n = c.size();

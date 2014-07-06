@@ -1,8 +1,5 @@
-/*
-  UnionFind u(100);  // 100要素作る
-  parent(x)          // xの親のid (xが根である場合は-rank)
-  root(x)            // xの根のid
-*/
+
+// Union Find
 
 struct UnionFind {
   vector<int> parent;
@@ -18,8 +15,7 @@ struct UnionFind {
   }
 };
 
-
-// Light version
+// Light Union Find
 
 struct UnionFind {
   vector<int> p;

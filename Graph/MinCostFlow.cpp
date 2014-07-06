@@ -1,3 +1,6 @@
+
+// Min Cost Flow
+
 #define MAX_V 10000
 int V;
 
@@ -14,9 +17,9 @@ typedef vector<Edges> Graph;
 typedef vector<Weight> Array;
 typedef vector<Array> Matrix;
 
-int h[MAX_V];                 //ポテンシャル
-int dist[MAX_V];              //最短距離
-int prevv[MAX_V], preve[MAX_V];  //直前の辺と頂点
+int h[MAX_V];                   // potential
+int dist[MAX_V];                // minimum distance
+int prevv[MAX_V], preve[MAX_V]; // previous vertex and edge
 
 void add_edge(Graph &g, int src, int dest, int cap, int weight) {
   g[src].pb((Edge){src, dest, cap, g[dest].size(), weight});

@@ -1,4 +1,6 @@
-// 点集合に対して凸包を求める
+
+// Convex
+
 VP ConvexHull(VP ps) {
   int n = ps.size();
   int k = 0;
@@ -12,7 +14,6 @@ VP ConvexHull(VP ps) {
   return ch;
 }
 
-// 凸多角形を直線で切ってできる多角形を求める
 VP ConvexCut(const VP &ps, L l) {
   VP Q;
   for (int i = 0; i < (int)ps.size(); i++) {

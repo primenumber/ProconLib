@@ -1,3 +1,6 @@
+
+// Minimum Spanning Tree
+
 typedef int Weight;
 struct Edge{
   int src, dest; Weight weight;
@@ -6,8 +9,8 @@ struct Edge{
 
 typedef vector<Edge> Edges;
 
-//Kruskal
-//頂点数とN, operator < が必要
+// Kruskal
+// N, operator <
 Edges kruskal(Edges &es) {
 	sort(es.begin(), es.end()); 
 	UF uf(N);
@@ -23,18 +26,18 @@ Edges kruskal(Edges &es) {
 }
 
 Edges prim(Graph &g){
-  	Edges res;
-  	vector<int> visited(g.size(), 0);
-  	priority_queue<Edge> q;
-  	q.push((Edge){-1, 0, 0});
+  Edges res;
+  vector<int> visited(g.size(), 0);
+  priority_queue<Edge> q;
+  q.push((Edge){-1, 0, 0});
  	while (!q.empty()) {
-   		Edge e = q.top();
-    	q.pop();
-    	if(visited[e.dest]) continue;
-    	if(e.src >= 0) res.pb(e);
-    	visited[e.dest] = 1;
-    	FORIT(i, g[e.dest]) if(visited[i->dest] == 0) q.push(*i);
-  	}
-  	sort(res.rbegin(), res.rend());
-  	return res;
+    Edge e = q.top();
+    q.pop();
+    if(visited[e.dest]) continue;
+    if(e.src >= 0) res.pb(e);
+    visited[e.dest] = 1;
+    FORIT(i, g[e.dest]) if(visited[i->dest] == 0) q.push(*i);
+  }
+  sort(res.rbegin(), res.rend());
+  return res;
 }

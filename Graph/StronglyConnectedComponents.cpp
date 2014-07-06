@@ -1,13 +1,16 @@
+
+// Strongly Connected Components
+
 //====================
 int V;
 #define MAX_V 1000
 //====================
 
-vector<int> g[MAX_V];    //グラフの隣接リスト
-vector<int> rg[MAX_V];   //辺の向きを逆にしたグラフ
-vector<int> vs;          //帰りがけ順(post order)の並び
-bool used[MAX_V];        //既に調べたか
-int cmp[MAX_V];          //属する今日連結成分のトポロジカル順序
+vector<int> g[MAX_V];
+vector<int> rg[MAX_V];
+vector<int> vs;
+bool used[MAX_V];
+int cmp[MAX_V];
 
 boid add_edge(int from, int to) {
   g[from].pb(to);
