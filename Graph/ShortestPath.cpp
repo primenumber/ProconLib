@@ -53,3 +53,26 @@ void warshall_floyd(Matrix &g) {
   REP(k,n) REP(i,n) REP(j,n)
     g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
 }
+
+// The costs of edges must be 0 or 1 (Verified: TCO 2014 Round 2C Medium)
+void bfs01(Graph &g, vector<int> &d, int s) {
+  fill(d.begin(), d.end(), INF);
+  d[s] = 0;
+  typedef pair<Weight,int> P;
+  queue<P> que, zero;
+  que.push(P(0, s));
+  while (!zero.empty() || !que.empty()) {
+    P top = zero.empty() ? que.front() : zero.front();
+    if (zero.empty()) que.pop(); else zero.pop();
+    Weight dist = top.first; int v = top.second;
+    if (d[v] < dist) continue;
+    REP(i, g[v].size()) {
+      Edge e = g[v][i];
+      if (d[e.dest] > d[v] + e.weight) {
+        d[e.dest] = d[v] + e.weight;
+        if (e.weight) que.push(P(d[e.dest], e.dest));
+        else zero.push(P(d[e.dest], e.dest));
+      }
+    }
+  }
+}
