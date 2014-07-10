@@ -34,6 +34,32 @@ void dijkstra(Graph &g, Array &d, int s) {
   }
 }
 
+// Dijkstra (build path version)
+vector<Weight> dijkstra(Graph &g, int s, vector<int> &prev) {
+  vector<Weight> dist(g.size(), INF); dist[s]=0;
+  prev.assign(g.size(), -1);
+  priority_queue<Edge> q;
+  for(q.push(Edge{-1, s, 0}); !q.empty();) {
+    Edge e = q.top(); q.pop();
+    if (prev[e.dest] != -1) continue;
+    prev[e.dest] = e.src;
+    for(Edge f : g[e.dest]) {
+      if(dist[f.dest] > e.weight + f.weight) {
+        dist[f.dest] = e.weight + f.weight;
+        q.push((Edge){f.src, f.dest, e.weight + f.weight});
+      }
+    }
+  }
+  return dist;
+}
+
+vector<int> buildPath(const vector<int> &prev, int t) {
+  vector<int> path;
+  for(int u=t;u>=0;u=prev[u]) path.push_back(u);
+  reverse(path.begin(), path.end());
+  return path;
+}
+
 // BellmanFord (Verified: AOJ2005)
 void bellman_ford(const Edges &es, Array &d, int s) {
   d.assign(g.size(), INF);
