@@ -1,3 +1,7 @@
+*.aux
+*.dvi
+*.log
 *.out
+*.pdf
 *.ps
 test.cpp

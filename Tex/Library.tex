@@ -1,0 +1,49 @@
+\documentclass[titlepage, landscape, a4paper, twocolumn, 12pt]{jsarticle}
+\usepackage[top=15truemm,bottom=15truemm,left=10truemm,right=10truemm]{geometry}
+
+\usepackage{otf}
+
+\usepackage{ascmac,here,txfonts}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.5,0}
+\definecolor{purple}{rgb}{0.5,0,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  language={C++},
+  basicstyle={\footnotesize\ttfamily},
+  identifierstyle={\footnotesize},
+  commentstyle={\footnotesize\itshape\color{red}},
+  keywordstyle={\footnotesize\bfseries\color{blue}},
+  ndkeywordstyle={\footnotesize},
+  stringstyle={\footnotesize\color{purple}},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+\title{Primasta　チームライブラリ}
+\author{asi1024, primenumber TakiTakiTakise}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\include{src/Template}
+\include{src/Structure}
+\include{src/Graph}
+\include{src/Math}
+\include{src/Geometry}
+\include{src/Others}
+\include{src/Tips}
+
+\end{document}
