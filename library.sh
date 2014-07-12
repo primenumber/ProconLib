@@ -14,6 +14,7 @@ cat Graph/StronglyConnectedComponents.cpp >> Graph.cpp
 cat Graph/2SAT.cpp                        >> Graph.cpp
 cat Graph/LCA\(BinarySearch\).cpp         >> Graph.cpp
 cat Graph/LCA\(RMQ\).cpp                  >> Graph.cpp
+cat Graph/ShortestHamiltonPath.cpp        >> Graph.cpp
 cat Graph/ArticulationPoints.cpp          >> Graph.cpp
 cat Graph/Bridge.cpp                      >> Graph.cpp
 
