@@ -1,3 +1,28 @@
 \section{Structure}
 
+\subsection{Union-Find Tree}
+互いに素な集合を扱うためのデータ構造であり，計算量は $O(\alpha(N))$ である．
+経路圧縮のみを行い実装を軽くした場合，計算量は $O(\log N)$ である．
 \lstinputlisting{../Structure/UnionFind.cpp}
+
+\subsection{Segment Tree}
+デフォルトは Range Minimum Query．区間は半開区間で指定すること．
+\lstinputlisting{../Structure/SegmentTree.cpp}
+デフォルトは区間に足せる Range Sum Query．遅延伝播セグメント木である.
+\lstinputlisting{../Structure/SegmentTreeLazy.cpp}
+二次元セグメント木
+\lstinputlisting{../Structure/SegmentTree2D.cpp}
+
+\subsection{Fenwick Tree}
+FenwickTree．デフォルトは Range Sum Query であり，
+引数として与えられるindex以下の部分の和を求める．
+\lstinputlisting{../Structure/FenwickTree.cpp}
+
+\subsection{Square Root Decomposition}
+平方分割によるRMQ．区間の回転や値の挿入や削除ができる．
+区間は閉区間で指定すること．
+\lstinputlisting{../Structure/SqrtDecomposition.cpp}
+
+\subsection{Treap}
+Treap．乱択アルゴリズムを用いた平衡二分木である．
+\lstinputlisting{../Structure/Treap.cpp}
