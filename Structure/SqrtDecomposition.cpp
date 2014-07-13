@@ -1,6 +1,3 @@
-
-// Square Root Decomposition
-
 typedef int Data;
 
 const int num = 500;

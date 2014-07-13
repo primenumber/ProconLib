@@ -1,6 +1,3 @@
-
-// Fenwick Tree
-
 struct Data {
   int num;
   Data() : num(0) {;}
@@ -25,7 +22,7 @@ struct Fenwick {
   }
 };
 
-// Light Fenwick Tree
+// Light version
 
 typedef int Data;
 const int len = 1 << 18;

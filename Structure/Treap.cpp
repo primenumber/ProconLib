@@ -1,6 +1,3 @@
-
-// Treap
-
 struct Treap {
   Data value;
   int pri;

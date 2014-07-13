@@ -1,6 +1,3 @@
-
-// Union Find
-
 struct UnionFind {
   vector<int> parent;
   UnionFind (int n) { parent.assign(n, -1); }
@@ -15,7 +12,7 @@ struct UnionFind {
   }
 };
 
-// Light Union Find
+// Light version
 
 struct UnionFind {
   vector<int> p;
