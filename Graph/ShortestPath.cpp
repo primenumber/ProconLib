@@ -1,6 +1,3 @@
-
-// Shortest Path
-
 typedef int Weight;
 struct Edge{
   int src, dest; Weight weight;
