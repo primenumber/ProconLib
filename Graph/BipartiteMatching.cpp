@@ -1,6 +1,3 @@
-
-// Bipartite Matching
-
 #define MAX_V 1000000
 int V;
 

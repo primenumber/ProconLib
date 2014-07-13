@@ -1,6 +1,3 @@
-
-// Min Cost Flow
-
 #define MAX_V 10000
 int V;
 

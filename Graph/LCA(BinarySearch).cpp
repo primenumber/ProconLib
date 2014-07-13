@@ -1,12 +1,8 @@
-
-// LCA (Binary Search)
-
-//==============================
 #define MAX_V 100000
 #define LOG_V 17
 int root, V;
 vector<int> g[MAX_V];
-//==============================
+
 int parent[LOG_V][MAX_V];
 int depth[MAX_V];
 

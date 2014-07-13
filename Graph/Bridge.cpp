@@ -1,6 +1,3 @@
-
-// Bridge
-
 struct Edge{ int src, dest; };
 
 typedef vector<Edge> Edges;

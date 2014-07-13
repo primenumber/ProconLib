@@ -1,10 +1,5 @@
-
-// LCA (RMQ)
-
-//==============================
 #define MAX_V 100
 int root, V;
-//==============================
 
 vector<int> g[MAX_V];
 int vs[2 * MAX_V - 1];

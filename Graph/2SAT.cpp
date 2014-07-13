@@ -1,9 +1,8 @@
-
 // 2SAT (needs source code of scc)
 
 V = 2 * N; // the number of variables
 
-// (X_0 + ~X_1)(X_1 + X_2)(~X_2 + ~X_0)の場合
+// (X_0 + ~X_1)(X_1 + X_2)(~X_2 + ~X_0)
 
 // (X_0 + ~X_1) <=> (~X_0 => ~X_1 && X_1 => X_0)
 add_edge(N + 0, N + 1);

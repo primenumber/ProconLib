@@ -1,6 +1,3 @@
-
-// Shortest Hamilton Path (Verified: AOJ1320)
-
 typedef int Weight;
 const Weight INF = 1000000000;
 struct Edge{ int src, dest; Weight weight; };

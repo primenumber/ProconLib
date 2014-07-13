@@ -1,6 +1,3 @@
-
-// Articulation Point
-
 #include <vector>
 #include <set>
 

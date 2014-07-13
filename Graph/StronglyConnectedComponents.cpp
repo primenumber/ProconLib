@@ -1,10 +1,5 @@
-
-// Strongly Connected Components
-
-//====================
 int V;
 #define MAX_V 1000
-//====================
 
 vector<int> g[MAX_V];
 vector<int> rg[MAX_V];

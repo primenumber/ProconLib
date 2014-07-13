@@ -1,6 +1,3 @@
-
-// Convex
-
 VP ConvexHull(VP ps) {
   int n = ps.size();
   int k = 0;
