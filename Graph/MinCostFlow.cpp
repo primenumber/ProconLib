@@ -3,10 +3,10 @@ int V;
 
 typedef int Weight;
 struct Edge{
-    int src, dest;
-    int cap, rev;
-    Weight weight;
-    bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
+  int src, dest;
+  int cap, rev;
+  Weight weight;
+  bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
 typedef vector<Edge> Edges;

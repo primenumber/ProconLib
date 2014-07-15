@@ -9,17 +9,17 @@ typedef vector<Edge> Edges;
 // Kruskal
 // N, operator <
 Edges kruskal(Edges &es) {
-	sort(es.begin(), es.end()); 
-	UF uf(N);
-	Edges res;
-	REP(i, es.size()) {
-		Edge e = es[i];
-		if(uf.root(e.src) != uf.root(e.dest)) {
-			uf.connect(e.src, e.dest);
-			res.push_back(e);
-		}
-	}
-	return res;
+  sort(es.begin(), es.end());
+  UF uf(N);
+  Edges res;
+  REP(i, es.size()) {
+    Edge e = es[i];
+    if(uf.root(e.src) != uf.root(e.dest)) {
+      uf.connect(e.src, e.dest);
+      res.push_back(e);
+    }
+  }
+  return res;
 }
 
 Edges prim(Graph &g){
@@ -27,7 +27,7 @@ Edges prim(Graph &g){
   vector<int> visited(g.size(), 0);
   priority_queue<Edge> q;
   q.push((Edge){-1, 0, 0});
- 	while (!q.empty()) {
+  while (!q.empty()) {
     Edge e = q.top();
     q.pop();
     if(visited[e.dest]) continue;

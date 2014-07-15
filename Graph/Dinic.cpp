@@ -1,7 +1,7 @@
 #define MAX_V 500
 struct Edge{
-    int src, dest;
-    int cap, rev;
+  int src, dest;
+  int cap, rev;
 };
 typedef vector<Edge> Edges;
 typedef vector<Edges> Graph;
