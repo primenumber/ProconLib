@@ -1,7 +1,7 @@
-\documentclass[titlepage, landscape, a4paper, twocolumn, 12pt]{jsarticle}
+\documentclass[titlepage, landscape, a4paper, twocolumn, 12pt]{ltjsarticle}
 \usepackage[top=15truemm,bottom=15truemm,left=10truemm,right=10truemm]{geometry}
 
-\usepackage{otf}
+\usepackage{luatexja-otf}
 
 \usepackage{ascmac,here,txfonts}
 \usepackage{listings}
@@ -19,7 +19,7 @@
   keywordstyle={\footnotesize\bfseries\color{blue}},
   ndkeywordstyle={\footnotesize\bfseries\color{comcol}},
   morekeywords={void, bool, char, int, short, long, double, auto},
-  morekeywords={vector, string, priority_queue, pair, set, map},
+  morekeywords={vector, string, priority\_queue, pair, set, map},
   morekeywords={Data, Weight, Edge, Edges, Graph, Array, Matrix},
   morekeywords={ld, P, L, C, VP},
   morendkeywords={if, else, while, for, do, break, continue, return},
@@ -31,11 +31,11 @@
   breaklines=true,
   columns=[l]{fullflexible},
   numbers=left,
-  xrightmargin=0zw,
-  xleftmargin=3zw,
+  xrightmargin=0ex,
+  xleftmargin=3ex,
   numberstyle={\scriptsize},
   stepnumber=1,
-  numbersep=1zw,
+  numbersep=1ex,
   lineskip=-0.5ex
 }
 
