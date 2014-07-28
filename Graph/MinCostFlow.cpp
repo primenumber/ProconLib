@@ -2,6 +2,8 @@
 int V;
 
 typedef int Weight;
+const Weight INF = 1000000000;
+
 struct Edge{
   int src, dest;
   int cap, rev;
@@ -14,17 +16,17 @@ typedef vector<Edges> Graph;
 typedef vector<Weight> Array;
 typedef vector<Array> Matrix;
 
-int h[MAX_V];                   // potential
-int dist[MAX_V];                // minimum distance
+Weight h[MAX_V];                // potential
+Weight dist[MAX_V];             // minimum distance
 int prevv[MAX_V], preve[MAX_V]; // previous vertex and edge
 
 void add_edge(Graph &g, int src, int dest, int cap, int weight) {
-  g[src].pb((Edge){src, dest, cap, g[dest].size(), weight});
-  g[dest].pb((Edge){dest, src, 0, g[src].size() - 1, -weight});
+  g[src].push_back((Edge){src, dest, cap, (int)g[dest].size(), weight});
+  g[dest].push_back((Edge){dest, src, 0, (int)g[src].size() - 1, -weight});
 }
 
-int min_cost_flow(Graph &g, int s, int t, int f) {
-  int res = 0;
+Weight min_cost_flow(Graph &g, int s, int t, int f) {
+  Weight res = 0; V = g.size();
   memset(h, 0, sizeof(h));
   typedef pair<Weight, int> P;
   while (f > 0) {
@@ -36,15 +38,15 @@ int min_cost_flow(Graph &g, int s, int t, int f) {
       P p = que.top(); que.pop();
       int v = p.second; 
       if (dist[v] < p.first) continue;
-        REP(i, g[v].size()) {
-          Edge &e = g[v][i];
-          if (e.cap > 0 && dist[e.dest] > dist[v] + e.weight + h[v] - h[e.dest]) {
-            dist[e.dest] = dist[v] + e.weight + h[v] - h[e.dest];
-            prevv[e.dest] = v;
-            preve[e.dest] = i;
-            que.push(P(dist[e.dest], e.dest));
-          }
-       }
+      REP(i, g[v].size()) {
+        Edge &e = g[v][i];
+        if (e.cap > 0 && dist[e.dest] > dist[v] + e.weight + h[v] - h[e.dest]) {
+          dist[e.dest] = dist[v] + e.weight + h[v] - h[e.dest];
+          prevv[e.dest] = v;
+          preve[e.dest] = i;
+          que.push(P(dist[e.dest], e.dest));
+        }
+      }
     }
     if (dist[t] == INF) return -1;
     REP(v, V) h[v] += dist[v];
