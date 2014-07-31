@@ -1,6 +1,3 @@
-
-// Longst Increasing Subsequence
-
 typedef int Data;
 const Data INF = 1000000000;
 

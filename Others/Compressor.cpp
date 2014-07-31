@@ -1,6 +1,3 @@
-
-// Compressor
-
 typedef int Data;
 vector<int> compressor(vector<Data> c) {
   int n = c.size();
