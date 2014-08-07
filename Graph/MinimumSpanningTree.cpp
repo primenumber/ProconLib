@@ -8,14 +8,14 @@ typedef vector<Edge> Edges;
 
 // Kruskal
 // N, operator <
-Edges kruskal(Edges &es) {
-  sort(es.begin(), es.end());
-  UF uf(N);
+Edges kruskal(int V, Edges &es) {
+  sort(es.rbegin(), es.rend());
+  UnionFind uf(V);
   Edges res;
   REP(i, es.size()) {
     Edge e = es[i];
     if(uf.root(e.src) != uf.root(e.dest)) {
-      uf.connect(e.src, e.dest);
+      uf.merge(e.src, e.dest);
       res.push_back(e);
     }
   }
@@ -30,10 +30,10 @@ Edges prim(Graph &g){
   while (!q.empty()) {
     Edge e = q.top();
     q.pop();
-    if(visited[e.dest]) continue;
-    if(e.src >= 0) res.pb(e);
+    if (visited[e.dest]) continue;
+    if (e.src >= 0) res.push_back(e);
     visited[e.dest] = 1;
-    FORIT(i, g[e.dest]) if(visited[i->dest] == 0) q.push(*i);
+    for (Edge i : g[e.dest]) if(visited[i.dest] == 0) q.push(i);
   }
   sort(res.rbegin(), res.rend());
   return res;

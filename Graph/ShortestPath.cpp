@@ -1,4 +1,5 @@
 typedef int Weight;
+Weight INF = 1000000000;
 struct Edge{
   int src, dest; Weight weight;
   bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
@@ -8,6 +9,10 @@ typedef vector<Edge> Edges;
 typedef vector<Edges> Graph;
 typedef vector<Weight> Array;
 typedef vector<Array> Matrix;
+
+void add_edge(Graph &g, int src, int dest, Weight weight) {
+  g[src].push_back((Edge){src, dest, weight});
+}
 
 // Dijkstra (Verified: AOJ2005)
 void dijkstra(Graph &g, Array &d, int s) {
@@ -59,7 +64,7 @@ vector<int> buildPath(const vector<int> &prev, int t) {
 
 // BellmanFord (Verified: AOJ2005)
 void bellman_ford(const Edges &es, Array &d, int s) {
-  d.assign(g.size(), INF);
+  fill(ALL(d), INF);
   d[s] = 0;
   REP(i, es.size()) {
     Edge e = es[i];
@@ -68,6 +73,23 @@ void bellman_ford(const Edges &es, Array &d, int s) {
       i = -1;
     }
   }
+}
+
+// BellmanFord (Negative Cycle)
+bool bellman_ford(const Edges &es, Array &d, int s) {
+  fill(ALL(d), INF); d[s] = 0;
+  REP(i, d.size()) {
+    bool updated = false;
+    for (Edge e : es) {
+      if (d[e.src] < INF && d[e.dest] > d[e.src] + e.weight) {
+        d[e.dest] = d[e.src] + e.weight;
+        if (i == d.size() - 1) return false;
+        updated = true;
+      }
+    }
+    if (!updated) return true;
+  }
+  return true;
 }
 
 // WarshallFloyd
