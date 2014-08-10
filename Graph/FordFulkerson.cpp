@@ -4,13 +4,15 @@ struct Edge{
   int cap, rev;
 };
 
+const int INF = 1000000000;
+
 typedef vector<Edge> Edges;
 typedef vector<Edges> Graph;
 bool visited[MAX_V];
 
 void add_edge(Graph &g, int src, int dest, int cap) {
-  g[src].push_back((Edge){src, dest, cap, g[dest].size()});
-  g[dest].push_back((Edge){dest, src, 0, g[src].size() - 1});
+  g[src].push_back((Edge){src, dest, cap, (int)g[dest].size()});
+  g[dest].push_back((Edge){dest, src, 0, (int)g[src].size() - 1});
 }
 
 int dfs(Graph &g, int v, int t, int f) {
