@@ -9,7 +9,7 @@ Weight shortestHamiltonPath(Matrix w, int s) {
   int n = w.size(), N = 1 << n;
   vector<vector<int>> best(N, vector<int>(n));
   REP(v,N) REP(i,n) best[v][i] = INF;
-  best[1<<s][i] = 0;
+  best[1<<s][s] = 0;
   REP(v,N) REP(i,n) if (v & (1 << i))
     REP(j,n) if (best[v|(1<<j)][j] > best[v][i] + w[i][j])
       best[v|(1<<j)][j] = best[v][i] + w[i][j];
