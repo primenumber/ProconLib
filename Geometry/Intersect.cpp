@@ -2,8 +2,7 @@
 // Intersect
 
 bool isis_ll(L l, L m) {
-  return abs(cross(l.b - l.a, m.b - m.a)) > eps ||
-    abs(cross(l.b - l.a, m.a - l.a)) < eps;
+  return abs(cross(l.b - l.a, m.b - m.a)) > eps;
 }
 
 bool isis_ls(L l, L s) {
