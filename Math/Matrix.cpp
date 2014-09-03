@@ -1,48 +1,46 @@
+typedef long double Data;
+typedef vector<Data> Array;
+typedef vector<Array> Matrix;
 
-struct Matrix{
-  static const int width = 2;
-  static const int height = 2;
-  Data data[width][height];
-  Matrix() {
-    for(int i=0;i<width;++i)
-      for(int j=0;j<height;++j)
-        data[i][j] = 0;
-  }
-  Matrix(Data scalar) {
-    for(int i=0;i<width;++i)
-      for(int j=0;j<height;++j){
-        if(i==j)
-          data[i][j] = scalar;
-        else
-          data[i][j] = 0;
-      }
-  }
-  Matrix(const Matrix&) = default;
-  Matrix(Matrix&&) = default;
-  Matrix& operator=(const Matrix&) = default;
-  Matrix& operator=(Matrix&&) = default;
-  Matrix operator-() const {
-    Matrix copy;
-    for(int i=0;i<width;++i)
-      for(int j=0;j<height;++j)
-        copy.data[i][j] = -data[i][j];
-    return copy;
-  }
-};
+bool is_zero(Data dat) { return (abs(dat) < eps); }
 
-Matrix operator+(const Matrix& lhs, const Matrix& rhs) {
-  Matrix copy;
-  for(int i=0;i<Matrix::width;++i)
-    for(int j=0;j<Matrix::height;++j)
-      copy.data[i][j] = lhs.data[i][j] + rhs.data[i][j];
-  return copy;
+Matrix operator-(Matrix mat) {
+  REP(i,mat.size()) REP(j,mat[0].size()) mat[i][j] = -mat[i][j];
+  return mat;
 }
 
-Matrix operator*(const Matrix& lhs, const Matrix& rhs) {
-  Matrix copy;
-  for(int i=0;i<Matrix::width;++i)
-    for(int j=0;j<Matrix::height;++j)
-      for(int k=0;k<Matrix::height;++k)
-        copy.data[i][j] += lhs.data[i][k] * rhs.data[k][j];
-  return copy;
+Matrix operator+(Matrix lhs, const Matrix &rhs) {
+  REP(i,lhs.size()) REP(j,lhs[0].size()) lhs[i][j] = lhs[i][j] + rhs[i][j];
+  return lhs;
+}
+
+Matrix operator-(Matrix lhs, const Matrix &rhs) {
+  REP(i,lhs.size()) REP(j,lhs[0].size()) lhs[i][j] = lhs[i][j] - rhs[i][j];
+  return lhs;
+}
+
+Matrix operator*(const Matrix &lhs, const Matrix &rhs) {
+  Matrix res(lhs.size(), Array(rhs[0].size(), 0));
+  REP(i,lhs.size()) REP(j,rhs[0].size()) REP(k,rhs.size())
+    res[i][j] = res[i][j] + lhs[i][k] * rhs[k][j];
+  return res;
+}
+
+int rankMat(Matrix A) {
+  const int n = A.size(), m = A[0].size();
+  int r = 0;
+  for (int i = 0; r < n && i < m; ++i) {
+    int pivot = r;
+    for (int j = r+1; j < n; ++j)
+      if (abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
+    swap(A[pivot], A[r]);
+    if (is_zero(A[r][i])) continue;
+    for (int k = m-1; k >= i; --k)
+      A[r][k] = A[r][k] / A[r][i];
+    for(int j = r+1; j < n; ++j)
+      for(int k = m-1; k >= i; --k)
+        A[j][k] = A[j][k] - (A[r][k] * A[j][i]);
+    ++r;
+  }
+  return r;
 }
