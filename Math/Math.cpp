@@ -6,7 +6,7 @@ ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 // ax+by=gcd(a,b)
 ll extgcd(ll a,ll b,ll& x,ll& y){
-  ll g=a;x=1;y=0;
+  ll g=a;x=c/a;y=0;
   if(b) g=extgcd(b,a%b,y,x), y-=(a/b)*x;
   return g;
 }
