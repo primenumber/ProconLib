@@ -11,8 +11,9 @@ SpMatrix operator-(SpMatrix mat) {
       p.second = -p.second;
   return mat;
 }
+
 template<typename T, typename Func>
-map<int, T> merge(map<int, T> lhs, const map<int, T>& rhs, Func& func = Func()) {
+map<int, T> merge(map<int, T> lhs, const map<int, T>& rhs, Func func) {
   for(auto& rp:rhs) {
     if (lhs.count(rp.first))
       lhs[rp.first] = func(lhs[rp.first], rp.second);
@@ -23,22 +24,44 @@ map<int, T> merge(map<int, T> lhs, const map<int, T>& rhs, Func& func = Func()) 
 }
 
 template<typename Func>
-SpMatrix binary_op(const SpMatrix& lhs, const SpMatrix& rhs) {
-  return merge(lhs, rhs, merge<Data, Func>);
+SpMatrix binary_op(const SpMatrix& lhs, const SpMatrix& rhs, Func func) {
+  return merge(lhs, rhs,
+      bind(merge<Data, Func>, placeholders::_1, placeholders::_2, func));
 }
 
 SpMatrix operator+(const SpMatrix& lhs, const SpMatrix &rhs) {
-  return binary_op<plus<Data>>(lhs, rhs);
+  return binary_op(lhs, rhs, plus<Data>());
 }
 
-Matrix operator-(Matrix lhs, const Matrix &rhs) {
-  return binary_op<minus<Data>>(lhs, rhs);
+SpMatrix operator-(const SpMatrix& lhs, const SpMatrix &rhs) {
+  return binary_op(lhs, rhs, minus<Data>());
 }
 
-Matrix operator*(const Matrix &lhs, const Matrix &rhs) {
-  Matrix res(lhs.size(), Array(rhs[0].size(), 0));
-  REP(i,lhs.size()) REP(j,rhs[0].size()) REP(k,rhs.size())
-    res[i][j] = res[i][j] + lhs[i][k] * rhs[k][j];
+Matrix to_mat(const SpMatrix &spmat, int row, int col) {
+  Matrix res(row, Array(col, 0));
+  for (auto& l:spmat) {
+    for (auto& v:l.second){
+      int i=l.first;
+      int j=v.first;
+      res[i][j] = v.second;
+    }
+  }
+  return res;
+}
+
+Matrix mult(const SpMatrix &lhs, const SpMatrix &rhs, int row, int col) {
+  Matrix res(row, Array(col, 0));
+  for (auto& l:lhs) {
+    for (auto& v:l.second){
+      int i=l.first;
+      int k=v.first;
+      if (!rhs.count(k)) continue;
+      for (auto& r:rhs.find(k)->second){
+        int j=r.first;
+        res[i][j] = res[i][j] + v.second * r.second;
+      }
+    }
+  }
   return res;
 }
 
