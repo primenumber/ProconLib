@@ -27,7 +27,7 @@ struct Fenwick {
 typedef int Data;
 const int len = 1 << 18;
 
-class BIT {
+struct BIT {
   Data data[len];
   BIT(void){ REP(i, len) data[i] = 0;}
   void update(int i, Data value) {
