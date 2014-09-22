@@ -99,6 +99,35 @@ void warshall_floyd(Matrix &g) {
     g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
 }
 
+// Shortest Path Faster Algorithm
+bool SPFA(const Graph &g, Array d, int s) {
+  const int n = g.size();
+  d.assign(n, INF); d[s] = 0;
+  vector<int> updated(n, 0);
+  vector<bool> inque(n, false);
+  queue<int> que;
+  que.push(s);
+  while (!que.empty()) {
+    int from = que.front();
+    que.pop();
+    inque[from] = false;
+    updated[from]++;
+    if (updated[from] == n) return false; // negative cycle
+    for (Edge e : g[from]) {
+      int to = e.dest;
+      Weight cost = d[from] + e.weight;
+      if (cost < d[to]) {
+        d[to] = cost;
+        if (!inque[to]) {
+          que.push(to);
+          inque[to] = true;
+        }
+      }
+    }
+  }
+  return true;
+}
+
 // The costs of edges must be 0 or 1 (Verified: TCO 2014 Round 2C Medium)
 void bfs01(Graph &g, vector<int> &d, int s) {
   fill(d.begin(), d.end(), INF);
