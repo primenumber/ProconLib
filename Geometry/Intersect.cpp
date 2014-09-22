@@ -1,4 +1,3 @@
-
 // Intersect
 
 bool isis_ll(L l, L m) {
@@ -6,7 +5,9 @@ bool isis_ll(L l, L m) {
 }
 
 bool isis_ls(L l, L s) {
-  return cross(l.b - l.a, s.a - l.a) * cross(l.b - l.a, s.b - l.a) < eps;
+  ld a = cross(l.b - l.a, s.a - l.a);
+  ld b = cross(l.b - l.a, s.b - l.a);
+  return (a * b < eps);
 }
 
 bool isis_lp(L l, P p) {
@@ -14,8 +15,8 @@ bool isis_lp(L l, P p) {
 }
 
 bool isis_ss(L s, L t) {
-  return ccw(s.a, s.b, t.a) * ccw(s.a, s.b, t.b) <= 0 &&
-    ccw(t.a, t.b, s.a) * ccw(t.a, t.b, s.b) <= 0;
+  return ccw(s.a, s.b, t.a) * ccw(t.a, t.b, s.a) <= 0 &&
+         ccw(s.a, s.b, t.b) * ccw(t.a, t.b, s.b) <= 0;
 }
 
 bool isis_sp(L s, P p) {
@@ -31,12 +32,9 @@ P mirror(L l, P p) {
   return (ld)2 * proj(l, p) - p;
 }
 
-VP is_ll(L s, L t){
-  VP v;
+P is_ll(L s, L t){
   P sv = s.b - s.a, tv = t.b - t.a;
-  if (abs(cross(sv,tv)) > 0)
-    v.push_back(s.a + sv * cross(tv, t.a - s.a) / cross(tv, sv));
-  return v;
+  return s.a + sv * cross(tv, t.a - s.a) / cross(tv, sv);
 }
 
 ld dist_lp(L l, P p) {
@@ -60,7 +58,9 @@ ld dist_sp(L s, P p) {
 
 ld dist_ss(L s, L t) {
   if (isis_ss(s, t)) return 0;
-  return min(min(dist_sp(s, t.a), dist_sp(s, t.b)), min(dist_sp(t, s.a), dist_sp(t, s.b)));
+  ld a = min(dist_sp(s, t.a), dist_sp(t, s.a));
+  ld b = min(dist_sp(s, t.b), dist_sp(t, s.b));
+  return min(a, b);
 }
 
 VP is_cc(C c1, C c2){
