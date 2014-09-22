@@ -3,6 +3,7 @@ const Data INF = 1000000000;
 
 vector<Data> lis(const vector<Data>& a) {
   const int n = a.size();
+  if (n == 0) return vector<Data>(0);
   vector<Data> A(n, INF);
   vector<int> id(n);
   for (int i = 0; i < n; i++) {
