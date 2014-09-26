@@ -15,8 +15,8 @@ bool isis_lp(L l, P p) {
 }
 
 bool isis_ss(L s, L t) {
-  return ccw(s.a, s.b, t.a) * ccw(t.a, t.b, s.a) <= 0 &&
-         ccw(s.a, s.b, t.b) * ccw(t.a, t.b, s.b) <= 0;
+  return ccw(s.a, s.b, t.a) * ccw(s.a, s.b, t.b) <= 0 &&
+         ccw(t.a, t.b, s.a) * ccw(t.a, t.b, s.b) <= 0;
 }
 
 bool isis_sp(L s, P p) {
