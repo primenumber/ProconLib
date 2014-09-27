@@ -65,21 +65,14 @@ Matrix mult(const SpMatrix &lhs, const SpMatrix &rhs, int row, int col) {
   return res;
 }
 
-int rankMat(Matrix A) {
-  const int n = A.size(), m = A[0].size();
-  int r = 0;
-  for (int i = 0; r < n && i < m; ++i) {
-    int pivot = r;
-    for (int j = r+1; j < n; ++j)
-      if (abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
-    swap(A[pivot], A[r]);
-    if (is_zero(A[r][i])) continue;
-    for (int k = m-1; k >= i; --k)
-      A[r][k] = A[r][k] / A[r][i];
-    for(int j = r+1; j < n; ++j)
-      for(int k = m-1; k >= i; --k)
-        A[j][k] = A[j][k] - (A[r][k] * A[j][i]);
-    ++r;
+Array mult(const SpMatrix &lhs, const Array &rhs, int len) {
+  Array res(len, 0);
+  for (auto& l:lhs) {
+    int i = l.first;
+    for (auto& v:l.second)
+      res[i] = res[i] + v.second * rhs[v.first];
   }
-  return r;
+  return res;
 }
+
+//rankmat for SparseMatrix is none
