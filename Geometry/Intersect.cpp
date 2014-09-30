@@ -88,7 +88,7 @@ bool isis_vc(vector<C> vc) {
   for(P p:crs){
     bool valid=true;
     REP(i,n)
-      if(abs(p-vc[i].p)>vc[i].r)
+      if(abs(p-vc[i].p)>vc[i].r+eps)
         valid=false;
     if(valid) return true;
   }
