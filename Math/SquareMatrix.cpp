@@ -62,8 +62,10 @@ pair<Matrix, vector<int>> LUPDecomposition(Matrix A) {
 
 Array LUPBackSubstitution(Matrix& LU, vector<int>& perm, Array a) {
   int n=LU.size();
+  Array tmp(n);
+  REP(i,n) tmp[i] = a[perm[i]];
+  swap(tmp, a);
   REP(i,n) {
-    swap(a[perm[i]], a[i]);
     REP(j,i) a[i] -= a[j] * LU[i][j];
   }
   for(int i=n-1; i >= 0; --i) {
