@@ -3,6 +3,7 @@ int V;
 
 typedef int Weight;
 const Weight INF = 1000000000;
+// const Weight eps = 1e-8;
 
 struct Edge{
   int src, dest;
@@ -20,7 +21,7 @@ Weight h[MAX_V];                // potential
 Weight dist[MAX_V];             // minimum distance
 int prevv[MAX_V], preve[MAX_V]; // previous vertex and edge
 
-void add_edge(Graph &g, int src, int dest, int cap, int weight) {
+void add_edge(Graph &g, int src, int dest, int cap, Weight weight) {
   g[src].push_back((Edge){src, dest, cap, (int)g[dest].size(), weight});
   g[dest].push_back((Edge){dest, src, 0, (int)g[src].size() - 1, -weight});
 }
@@ -40,7 +41,7 @@ Weight min_cost_flow(Graph &g, int s, int t, int f) {
       if (dist[v] < p.first) continue;
       REP(i, g[v].size()) {
         Edge &e = g[v][i];
-        if (e.cap > 0 && dist[e.dest] > dist[v] + e.weight + h[v] - h[e.dest]) {
+        if (e.cap > 0 && dist[e.dest] > dist[v] + e.weight + h[v] - h[e.dest] /* + eps */) {
           dist[e.dest] = dist[v] + e.weight + h[v] - h[e.dest];
           prevv[e.dest] = v;
           preve[e.dest] = i;
