@@ -23,6 +23,7 @@ ld norm(const Point &a) { return dot(a, a); }
 ld dist(const Point &a) { return sqrt(norm(a)); }
 
 struct Line { Point a, b; };
+struct Plane { Point a, b, c; };
 struct Sphere { Point p; ld r; };
 
 Point project_lp(Line l, Point p) {
@@ -51,6 +52,32 @@ ld distance_ll (Line l, Line m) {
   if (norm(b) < eps) return dist(a); // parallel
   ld t = dot(-a, b) / norm(b);
   return dist(a + t * b);
+}
+
+bool is_in_plane(Plane pl, Point p) {
+  pl.a -= p;
+  pl.b -= p;
+  pl.c -= p;
+  return abs(dot(pl.a, cross(pl.b, pl.c))) < eps;
+}
+
+bool is_cross_pll(Plane pl, Line l) {
+  Point p = (l.a - l.b) + pl.a;
+  return !is_in_plane(pl, p) || is_in_plane(pl, l.a);
+}
+
+bool is_cross_tl(Plane t, Line l) {
+  Point p = (l.a - l.b) + pl.a;
+  return !is_in_plane(pl, p) || is_in_plane(pl, l.a);
+}
+
+ld distance_pll(Plane pl, Line l) {
+  if (is_cross_pll(pl, l)) return 0.0;
+  return min(distance_ll({pl.a,pl.b}, l), distance_ll({pl.b, pl.c}, l));
+}
+
+ld distance_tl(Plane t, Line l) {
+  return 0;
 }
 
 // Verified : AOJ1289
