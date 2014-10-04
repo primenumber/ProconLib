@@ -44,3 +44,20 @@ int rankMat(Matrix A) {
   }
   return r;
 }
+
+Data det(Matrix A) {
+  const int n = A.size();
+  Data D = Data(1);
+  for (int i = 0; i < n; ++i) {
+    int pivot = i;
+    for (int j = i+1; j < n; ++j)
+      if (abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
+    swap(A[pivot], A[i]);
+    D = D * A[i][i] * Data(i != pivot ? -1 : 1);
+    if (is_zero(A[i][i])) break;
+    for(int j = i+1; j < n; ++j)
+      for(int k = n-1; k >= i; --k)
+        A[j][k] = A[j][k] - A[i][k] * A[j][i] / A[i][i];
+  }
+  return D;
+}
