@@ -26,3 +26,12 @@ FenwickTree．デフォルトは Range Sum Query であり，
 \subsection{Treap}
 Treap．乱択アルゴリズムを用いた平衡二分木である．
 \lstinputlisting{../Structure/Treap.cpp}
+
+\subsection{Partition Tree}
+$O(N \log^2 N)$ の前処理で，区間のk-th elementを $O(\log^2 N)$ で求めることができる．
+\lstinputlisting{../Structure/PartitionTree.cpp}
+
+\subsection{kD-Tree}
+$O(N \log N)$ の前処理で，各クエリに対して $O(\log N)$ で与えられた点に最も近い点を求めることができる．
+与えられた領域内の点の列挙を行うこともできる．
+\lstinputlisting{../Structure/kdTree.cpp}

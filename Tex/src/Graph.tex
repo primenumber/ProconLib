@@ -22,7 +22,7 @@ Dinic
 
 \subsection{強連結成分分解}
 \begin{itemize}
-  \item vector<int> g[], rg[] : グラフと逆辺のグラフ．add_edge関数で作る
+  \item \verb#vector<int> g[], rg[]# : グラフと逆辺のグラフ．\verb#add_edge#関数で作る
   \item cmp[] : DAGのトポロジカル順序．srcから順に番号が付けられる．
   \item scc(int) : グラフの頂点数を引数にとり，強連結成分分解を行う．返り値はDAGの頂点数．
   \item グラフの頂点数とDAGの頂点数を引数にとり，DAGを生成する．頂点番号はcmpと同じ．
@@ -49,3 +49,9 @@ RMQバージョン
 
 \subsection{橋}
 \lstinputlisting{../Graph/Bridge.cpp}
+
+\subsection{最大独立集合}
+\lstinputlisting{../Graph/MaximumIndependentSet.cpp}
+
+\subsection{最小全域有向木}
+\lstinputlisting{../Graph/MinimumArborescence.cpp}
