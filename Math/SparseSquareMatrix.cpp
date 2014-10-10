@@ -8,12 +8,13 @@ Array CG_method_impl(const SpMatrix& A, const SpMatrix& A_t, const Array& b) {
   Array p_old = r_old;
   Array x(b.size(), Data(0));
   REP(i,b.size()) {
-    Data alpha = norm(r_old) / norm(A * p_old); // p^T * A^T * A * p = (A*p)^T * (A*p) = norm(A*p)
+    Array Axp = mult(A, p_old, p_old.size());
+    Data alpha = norm(r_old) / norm(Axp); // p^T * A^T * A * p = (A*p)^T * (A*p) = norm(A*p)
     x = x + alpha * p_old;
-    Array r_new = r_old - alpha * (A_T * (A * p_old));
-    if (is_zero(r_new)) break;
+    Array r_new = r_old  + -alpha * mult(A_t, mult(A, p_old, p_old.size()), p_old.size());
+    if (all_of(begin(r_new),end(r_new),is_zero)) break;
     Data beta = norm(r_new) / norm(r_old);
-    p_new = r_new + beta * p_old;
+    Array p_new = r_new + beta * p_old;
     r_new.swap(r_old);
     p_new.swap(p_old);
   }
@@ -23,7 +24,8 @@ Array CG_method_impl(const SpMatrix& A, const SpMatrix& A_t, const Array& b) {
 // solve System of linear equations
 Array CG_method(const SpMatrix& A, const SpArray& b, int n) {
   SpMatrix A_t = transpose(A);
-  Array b_prime = mult(ary, spmat, 1, n)[0]; //A^T * b^T = (b * A)^T
+  SpMatrix B; B[0] = b;
+  Array b_prime = mult(B, A, 1, n)[0]; //A^T * b^T = (b * A)^T
   return CG_method_impl(A, A_t, b_prime); // A^T * A * x^T = A^T * b^T
 }
 
@@ -45,50 +47,4 @@ Data det(SpMatrix A) {
             A[j][k] = A[j][k] - A[i][k] * A[j][i] / A[i][i];
   }
   return D;
-}
-
-// LUP Decomposition
-// PA = LU
-//   |1 0 0|
-// L=|* 1 0|
-//   |* * 1|
-//
-//   |* * *|
-// U=|0 * *|
-//   |0 0 *|
-//
-//    |U U U|
-//ret=|L U U| P:permutation
-//    |L L U|,
-pair<Matrix, vector<int>> LUPDecomposition(Matrix A) {
-  int n=A.size();
-  vector<int> perm(n);
-  iota(begin(perm),end(perm),0);
-  REP(i,n){
-    int pivot = i;
-    for(int j = i+1; j < n; ++j)
-      if(abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
-    swap(A[pivot], A[i]);
-    swap(perm[pivot], perm[i]);
-    for(int j=i+1; j < n; ++j) {
-      A[j][i] /= A[i][i];
-      for (int k = i+1; k < n; ++k)
-        A[j][k] -= A[i][k] * A[j][i];
-    }
-  }
-  return make_pair(A, perm);
-}
-
-Array LUPBackSubstitution(Matrix& LU, vector<int>& perm, Array a) {
-  int n=LU.size();
-  REP(i,n) {
-    swap(a[perm[i]], a[i]);
-    REP(j,i) a[i] -= a[j] * LU[i][j];
-  }
-  for(int i=n-1; i >= 0; --i) {
-    for(int j=i+1; j < n; ++j)
-      a[i] -= a[j] * LU[i][j];
-    a[i] /= LU[i][i];
-  }
-  return a;
 }

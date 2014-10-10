@@ -37,6 +37,13 @@ SpMatrix operator-(const SpMatrix& lhs, const SpMatrix &rhs) {
   return binary_op(lhs, rhs, minus<Data>());
 }
 
+SpMatrix transpose(const SpMatrix &A) {
+  SpMatrix res;
+  for (auto& l:A) for (auto& p:l.second)
+    res[p.first][l.first] = p.second;
+  return res;
+}
+
 Matrix to_mat(const SpMatrix &spmat, int row, int col) {
   Matrix res(row, Array(col, 0));
   for (auto& l:spmat) {
