@@ -26,6 +26,46 @@ Matrix operator*(const Matrix &lhs, const Matrix &rhs) {
   return res;
 }
 
+Array operator+(const Array &lhs, const Array &rhs) {
+  Array res = lhs;
+  REP(i,rhs.size()) res[i] = res[i] + rhs[i];
+  return res;
+}
+
+Array operator*(const Matrix &lhs, const Array &rhs) {
+  Array res(lhs.size());
+  REP(i,lhs.size())
+    res[i] = inner_product(begin(lhs[i]),end(lhs[i]),begin(rhs),Data(0));
+  return res;
+}
+
+Array operator*(Data scalar, const Array &rhs) {
+  Array res(rhs.size());
+  REP(i,rhs.size())
+    res[i] = scalar * rhs[i];
+  return res;
+}
+
+Matrix transpose(const Matrix &A) {
+  const int n = A[0].size(), m = A.size();
+  Matrix res(n, Array(m, 0));
+  REP(i,n)REP(j,m) res[i][j] = A[j][i];
+  return res;
+}
+
+Data inner_product_ex(const Array& a, const Array& b, const Matrix& m) {
+  Array b_prime = m*b;
+  return inner_product(begin(a),end(a),begin(b_prime),Data(0));
+}
+
+Data norm(const Array &a) {
+  return inner_product(begin(a),end(a),begin(a),Data(0));
+}
+
+Data norm(const Array &a, const Matrix &M) {
+  return inner_product_ex(a,a,M);
+}
+
 int rankMat(Matrix A) {
   const int n = A.size(), m = A[0].size();
   int r = 0;
