@@ -7,7 +7,7 @@ Array CG_method_impl(const SpMatrix& A, const SpMatrix& A_t, const Array& b) {
   Array r_old = b;
   Array p_old = r_old;
   Array x(b.size(), Data(0));
-  REP(i,b.size()) {
+  while(true) {
     Array Axp = mult(A, p_old, p_old.size());
     Data alpha = norm(r_old) / norm(Axp); // p^T * A^T * A * p = (A*p)^T * (A*p) = norm(A*p)
     x = x + alpha * p_old;
