@@ -39,3 +39,20 @@ struct BIT {
     return s;
   }
 };
+
+// Range Add, Range Sum
+
+struct RARS {
+  BIT bit1, bit2;
+  void add(int fr, int to, Data val) {
+    bit1.update(fr, Data(-val.num * fr));
+    bit1.update(to, Data(val.num * to));
+    bit2.update(fr, val);
+    bit2.update(to, Data(-val.num));
+  }
+  Data sum(int fr, int to) {
+    Data s1 = bit1.query(to) + bit2.query(to) * to;
+    Data s2 = bit1.query(fr) + bit2.query(fr) * fr;
+    return Data(s1.num - s2.num);
+  }
+};
