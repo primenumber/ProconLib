@@ -50,6 +50,26 @@ inline Data Merge(Data left, Data right) { return Data(left.num + right.num); }
 inline Data Set(Data lazy, Data val) { return val; }
 inline Data Eval(Data data, Data lazy, int num) { return lazy; }
 
+// Range Add, Set - Range Sum (Unverified)
+struct Data {
+  int type; // 0:data, 1:add, 2:set
+  int num;
+  Data() : type(0), num(0) {;}
+  Data(int t, int n) : type(t), num(n) {;}
+};
+
+const Data identity = Data(0, 0);
+
+inline Data Merge(Data left, Data right) { return Data(0, left.num + right.num); }
+inline Data Set(Data lazy, Data val) {
+  if (val.type == 2) return val;
+  lazy.num += val.num; return lazy;
+}
+inline Data Eval(Data data, Data lazy, int num) {
+  if (lazy.type == 2) return Data(0, lazy.num * num);
+  return Data(0, data.num + lazy.num * num);
+}
+
 class SegmentTreeLazy {
   static const int MAX_DEPTH = 16;
   static const int STsize = 1 << MAX_DEPTH;
@@ -63,22 +83,14 @@ class SegmentTreeLazy {
   void evaluate(int node, int num) {
     if (!flag[node]) return;
     Data val = lazy[node];
-    data[node] = Eval(data[node], lazy[node], num);
-    flag[node] = false;
-    lazy[node] = 0;
+    data[node] = Eval(data[node], val, num); flag[node] = false;
     if (node < n) return;
-    lazyset((node-n)*2+0, val);
-    lazyset((node-n)*2+1, val);
+    lazyset((node-n)*2+0, val); lazyset((node-n)*2+1, val);
   }
   void update_sub(int fr, int to, int node, int la, int ra, Data val) {
-    if (ra <= fr || to <= la) {
-      evaluate(node, ra - la);
-      return;
-    }
+    if (ra <= fr || to <= la) { evaluate(node, ra - la); return; }
     if (fr <= la && ra <= to) {
-      lazyset(node, val);
-      evaluate(node, ra - la);
-      return;
+      lazyset(node, val); evaluate(node, ra - la); return;
     }
     evaluate(node, ra - la);
     int lpos = (node-n)*2+0, rpos = (node-n)*2+1;
