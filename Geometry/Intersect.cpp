@@ -109,8 +109,8 @@ VP is_lc(C c, L l){
 
 VP is_sc(C c, L l){
   VP v = is_lc(c, l), res;
-  for (int k = 0; k < v.size(); k++)
-    if (ccw(l.a, v[k], l.b) == -2) res.push_back(v[k]);
+  for (P p : v)
+    if (isis_sp(l, p)) res.push_back(p);
   return res;
 }
 
