@@ -1,14 +1,14 @@
-Seg2D{
-  static const STsize = 1 << 10;
+struct Seg2D{
+  static const int STsize = 1 << 10;
   int n;
   SegmentTree data[STsize];
   Seg2D() : n(STsize / 2) {}
   void update (int posi, int posj, Data value) {
-    data[posi].update(posj.value);
+    data[posi].update(posj, value);
     while (posi < 2*n-1) {
       int l = posi, r = posi^1;
       posi = posi / 2 + n;
-      data[posi].update(posj,Merge(data[l], data[r]));
+      data[posi].update(posj, Merge(data[posi].data[l], data[posi].data[r]));
     }
   }
   Data sub(int T, int B, int L, int R, int node, int la, int ra){
