@@ -1,11 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <string>
-#include <map>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 #define REP(i,n) for(int i=0;i<(int)(n);i++)
+#define ALL(x) (x).begin(),(x).end()
 
 using namespace std;
 
