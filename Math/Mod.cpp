@@ -10,6 +10,8 @@ struct Mod {
 Mod operator+(Mod a, Mod b) { return Mod((a.num + b.num) % mod); }
 Mod operator-(Mod a, Mod b) { return Mod((mod + a.num - b.num) % mod); }
 Mod operator*(Mod a, Mod b) { return Mod(((long long)a.num * b.num) % mod); }
+Mod operator+=(Mod &a, Mod b) { return a = a + b; }
+Mod operator-=(Mod &a, Mod b) { return a = a - b; }
 Mod operator^(Mod a, int n) {
   if (n == 0) return Mod(1);
   Mod res = (a * a) ^ (n / 2);
