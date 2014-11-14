@@ -8,3 +8,4 @@
 
 (setq indent-line-function 'indent-relative-maybe)
 (global-set-key "\C-m" 'newline-and-indent)
+(global-set-key (kbd "C-/") 'undo)
