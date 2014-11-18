@@ -100,7 +100,7 @@ void warshall_floyd(Matrix &g) {
 }
 
 // Shortest Path Faster Algorithm
-bool SPFA(const Graph &g, Array d, int s) {
+bool SPFA(const Graph &g, Array &d, int s) {
   const int n = g.size();
   d.assign(n, INF); d[s] = 0;
   vector<int> updated(n, 0);
