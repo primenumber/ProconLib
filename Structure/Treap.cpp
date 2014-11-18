@@ -54,6 +54,6 @@ Treap *insert(Treap *t, int k, Data v) {
 Treap *erase(Treap *t, int k) {
   auto s1 = split(t, k);
   auto s2 = split(s1.second, 1);
-  free(s2.first);
+  delete s2.first;
   return merge(s1.first, s2.second);
 }
