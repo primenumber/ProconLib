@@ -22,10 +22,3 @@ VP ConvexCut(const VP &ps, L l) {
   }
   return Q;
 }
-
-ld area(const VP &p) {
-  ld res = 0;
-  int n = p.size();
-  REP(j,n) res += cross(p[j], p[(j+1)%n]);
-  return res / 2;
-}

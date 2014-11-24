@@ -12,20 +12,13 @@ ld cross (P a, P b) { return imag(conj(a) * b); }
 
 namespace std {
   bool operator<(const P &lhs, const P &rhs) {
-    return lhs.real() == rhs.real() ? lhs.imag() < rhs.imag() : lhs.real() < rhs.real();
+    return lhs.real() == rhs.real() ? lhs.imag() < rhs.imag()
+                                    : lhs.real() < rhs.real();
   }
 }
 
-// Line
-class L{
-public:
-  P a, b;
-  L (P aa, P bb) { a = aa; b = bb; }
-  L (ld ax, ld ay, ld bx, ld by) { a = P(ax, ay); b = P(bx, by); }
-};
-
-// Circle
-class C { public: P p; ld r; };
+struct L{ P a, b; };
+struct C { P p; ld r; };
 
 // counter clockwise
 int ccw (P a, P b, P c) {
