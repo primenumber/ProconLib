@@ -23,7 +23,7 @@ bool is_polygon(L l, VP &g) {
   for (int i = 0; i < n; i++) {
     P a = g[i];
     P b = g[(i+1)%n];
-    if (isis_ss(l, L(a, b))) return true;
+    if (isis_ss(l, (L){a, b})) return true;
   }
   return false;
 }
@@ -36,7 +36,7 @@ int is_in_Polygon(const VP &g, P p) {
     if (imag(a) > imag(b)) swap(a, b);
     if (imag(a) <= 0 && 0 < imag(b))
       if (cross(a, b) < 0) in = !in;
-    if (cross(a, b) == 0 && dot(a, b) <= 0) return 0; // on
+    if (abs(cross(a, b)) < eps && dot(a, b) < eps) return 0; // on
   }
   if(in) return 1; // in
   return -1; // out

@@ -19,6 +19,12 @@ bool isis_ss(L s, L t) {
          ccw(t.a, t.b, s.a) * ccw(t.a, t.b, s.b) <= 0;
 }
 
+bool isis_ss(L s, L t) {
+  if (abs(cross(s.b - s.a, t.b - t.a)) < eps) return false;
+  P p = is_ll(s, t);
+  return isis_sp(s, p) && isis_sp(t, p);
+}
+
 bool isis_sp(L s, P p) {
   return abs(s.a - p) + abs(s.b - p) - abs(s.b - s.a) < eps;
 }
@@ -122,9 +128,9 @@ vector<L> tangent_cp(C c, P p) {
   if (isnan(l)) { return ret; }
   P v1 = v * P(l / d,  c.r / d);
   P v2 = v * P(l / d, -c.r / d);
-  ret.push_back(L(p, p + v1));
+  ret.push_back((L){p, p + v1});
   if (l < eps) return ret;
-  ret.push_back(L(p, p + v2));
+  ret.push_back((L){p, p + v2});
   return ret;
 }
 
@@ -144,8 +150,8 @@ vector<L> tangent_cc(C c1, C c2) {
     v /= abs(v);
     P q1 = c1.p + v * P(0,  1) * c1.r;
     P q2 = c1.p + v * P(0, -1) * c1.r;
-    ret.push_back(L(q1, q1 + v));
-    ret.push_back(L(q2, q2 + v));
+    ret.push_back((L){q1, q1 + v});
+    ret.push_back((L){q2, q2 + v});
   }
   return ret;
 }

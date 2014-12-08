@@ -16,9 +16,8 @@ VP ConvexCut(const VP &ps, L l) {
   for (int i = 0; i < (int)ps.size(); i++) {
     P A = ps[i], B = ps[(i+1)%ps.size()];
     if (ccw(l.a, l.b, A) != -1) Q.push_back(A);
-    if (ccw(l.a, l.b, A) * ccw(l.a, l.b, B) < 0) {
-      Q.push_back(is_ll(L(A, B), l)[0]);
-    }
+    if (ccw(l.a, l.b, A) * ccw(l.a, l.b, B) < 0)
+      Q.push_back(is_ll((L){A, B}, l));
   }
   return Q;
 }

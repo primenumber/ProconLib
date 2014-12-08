@@ -27,8 +27,7 @@ struct Plane { Point a, b, c; };
 struct Sphere { Point p; ld r; };
 
 Point project_lp(Line l, Point p) {
-  Point point = l.a;
-  Point vec = l.b - l.a;
+  Point point = l.a, vec = l.b - l.a;
   return point + dot(p-point, vec) / norm(vec) * vec;
 }
 
@@ -44,14 +43,11 @@ ld distance_sp(Line l, Point p) {
     return min(dist(p - l.a), dist(p - l.b));
 }
 
-// Verified : AOJ1331
+// Verified : AOJ2081
 ld distance_ll (Line l, Line m) {
-  Point p1 = l.a, v1 = l.b - l.a,p2 = m.a, v2 = m.b - m.a;
-  Point a = p1 - p2 - dot(p1-p2, v2) / norm(v2) * v2;
-  Point b = v1 - dot(v1, v2) / norm(v2) * v2;
-  if (norm(b) < eps) return dist(a); // parallel
-  ld t = dot(-a, b) / norm(b);
-  return dist(a + t * b);
+  Point v = cross(l.b - l.a, m.b - m.a), p = m.a - l.a;
+  if (dist(v) < eps) return distance_lp(l, m.a);
+  return abs(dot(v, p)) / dist(v);
 }
 
 bool is_in_plane(Plane pl, Point p) {
