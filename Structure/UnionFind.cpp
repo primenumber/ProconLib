@@ -1,6 +1,6 @@
 struct UnionFind {
   vector<int> parent;
-  UnionFind (int n) { parent.assign(n, -1); }
+  UnionFind (int n) : parent(n, -1) {}
   int root(int x) { return parent[x] < 0 ? x : parent[x] = root(parent[x]); }
   bool merge(int x, int y) {
     x = root(x); y = root(y);
@@ -16,7 +16,7 @@ struct UnionFind {
 
 struct UnionFind {
   vector<int> p;
-  UnionFind (int n) { p.assign(n, -1); }
+  UnionFind (int n) : parent(n, -1) {}
   int root(int x) { return p[x] < 0 ? x : p[x] = root(p[x]); }
   void merge(int x, int y) { if (root(x) != root(y)) p[root(y)] = x; }
 };
