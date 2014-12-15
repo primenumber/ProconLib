@@ -27,11 +27,8 @@ struct Heap {
   Heap(Data v) : val(v) {}
   Data top() { return val; }
 };
-int cnt1, cnt2;
 shared_ptr<Heap> meld(
     shared_ptr<Heap> a, shared_ptr<Heap> b, shared_ptr<Heap> p = nullptr) {
-  ++cnt1;
-  if(p==nullptr) ++cnt2;
   if (!a) {
     if (b) b->p = p;
     return b;
