@@ -29,7 +29,6 @@ void dijkstra(G &g, Array &d, int s) {
   auto p = push(que, Data(0, s));
   que = p.first;
   nodes[s] = p.second;
-  assert(que!=nullptr);
   while (que) {
     Weight dist = que->top().first;
     int v = que->top().second;
