@@ -3,7 +3,7 @@
 typedef long double ld;
 typedef valarray<ld> Point;
 
-const ld eps = 1e-8;
+const ld eps = 1e-8, inf = 1e12;
 
 Point make_point(ld x, ld y, ld z) {
   Point p(3);
@@ -22,9 +22,13 @@ Point cross(const Point &a, const Point &b) {
 ld norm(const Point &a) { return dot(a, a); }
 ld dist(const Point &a) { return sqrt(norm(a)); }
 
+// Line
+
 struct Line { Point a, b; };
-struct Plane { Point a, b, c; };
-struct Sphere { Point p; ld r; };
+
+bool is_in_segment(Line l, Point p) {
+  return abs(dist(l.a - p) + dist(l.b - p) - dist(l.a - l.b)) < eps;
+}
 
 Point project_lp(Line l, Point p) {
   Point point = l.a, vec = l.b - l.a;
@@ -50,33 +54,65 @@ ld distance_ll (Line l, Line m) {
   return abs(dot(v, p)) / dist(v);
 }
 
+// Plane
+
+struct Plane { Point a, b, c; };
+
 bool is_in_plane(Plane pl, Point p) {
-  pl.a -= p;
-  pl.b -= p;
-  pl.c -= p;
+  pl.a -= p; pl.b -= p; pl.c -= p;
   return abs(dot(pl.a, cross(pl.b, pl.c))) < eps;
 }
 
-bool is_cross_pll(Plane pl, Line l) {
+bool parallel_pll(Plane pl, Line l) {
   Point p = (l.a - l.b) + pl.a;
-  return !is_in_plane(pl, p) || is_in_plane(pl, l.a);
+  return is_in_plane(pl, p);
 }
 
+bool is_in_triangle(Plane t, Point p) {
+  t.a -= p; t.b -= p; t.c -= p;
+  ld a = dist(cross(t.a, t.b));
+  ld b = dist(cross(t.b, t.c));
+  ld c = dist(cross(t.c, t.a));
+  return abs(a + b + c - dist(cross(t.c - t.a, t.b - t.a))) < eps;
+}
+
+bool is_cross_pll(Plane pl, Line l) {
+  return !parallel_pll(pl, l) || is_in_plane(pl, l.a);
+}
+
+Point intersect_pll(Plane pl, Line l) {
+  assert(!parallel_pll(pl, l));
+  Point vec = cross(pl.b - pl.a, pl.c - pl.a);
+  ld s = dot(vec, l.a - pl.a), t = dot(vec, l.b - pl.a);
+  return (l.b * s - l.a * t) / (s - t);
+}
+
+// Verified : AOJ0115
 bool is_cross_tl(Plane t, Line l) {
-  Point p = (l.a - l.b) + pl.a;
-  return !is_in_plane(pl, p) || is_in_plane(pl, l.a);
+  assert(!parallel_pll(t, l)); // use distance_ll
+  Point q = intersect_pll(t, l);
+  return is_in_triangle(t, q);
 }
 
 ld distance_pll(Plane pl, Line l) {
   if (is_cross_pll(pl, l)) return 0.0;
-  return min(distance_ll({pl.a,pl.b}, l), distance_ll({pl.b, pl.c}, l));
+  return min(distance_ll({pl.a, pl.b}, l), distance_ll({pl.b, pl.c}, l));
 }
 
 ld distance_tl(Plane t, Line l) {
-  return 0;
+  if (is_cross_tl(t, l)) return 0;
+  ld res = distance_ll((Line){t.a, t.b}, l);
+  res = min(res, distance_ll((Line){t.b, t.c}, l));
+  res = min(res, distance_ll((Line){t.c, t.a}, l));
+  return res;
 }
 
+// Sphere
+
 // Verified : AOJ1289
+
+struct Sphere { Point p; ld r; };
+
 vector<Point> intersect_lo(Sphere s, Line l) {
   vector<Point> res;
   Point p = project_lp(l, s.p);
