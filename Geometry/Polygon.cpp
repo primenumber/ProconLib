@@ -11,6 +11,13 @@ P incenter(VP tri) {
   return ic;
 }
 
+P circumcenter(VP tri) {
+  P a=tri[1]-tri[0], b=tri[2]-tri[0];
+  ld sncab = cross(a,b)*cross(a,b);
+  return ((norm(a)*b-norm(b)*a)*cross(a,b))/(2*sncab) + tri[0];
+}
+
+
 ld area(const VP &p) {
   ld res = 0;
   int n = p.size();
