@@ -3,8 +3,8 @@ typedef int Data;
 const int len = 1 << 18;
 
 struct BIT {
-  Data data[len];
-  BIT(void){ REP(i, len) data[i] = 0;}
+  vector<Data> data;
+  BIT() : data(len, 0) {}
   void update(int i, Data value) {
     for (; i < len; i |= i+1) data[i] += value;
   }
@@ -27,8 +27,8 @@ inline Data Merge(Data left, Data right) {
 
 struct BIT {
   static const int len = 1 << 18;
-  Data data[len];
-  BIT(void){ REP(i, len) data[i].num = 0; }
+  vector<Data> data;
+  BIT() : data(len, 0) {}
   void update(int i, Data value) {
     for (; i < len; i |= i+1) data[i] = Merge(data[i], value);
   }
