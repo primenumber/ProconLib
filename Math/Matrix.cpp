@@ -22,7 +22,7 @@ Matrix operator-(Matrix lhs, const Matrix &rhs) {
 Matrix operator*(const Matrix &lhs, const Matrix &rhs) {
   Matrix res(lhs.size(), Array(rhs[0].size(), 0));
   REP(i,lhs.size()) REP(j,rhs[0].size()) REP(k,rhs.size())
-    res[i][j] = res[i][j] + lhs[i][k] * rhs[k][j];
+    res[i][j] = fma(lhs[i][k], rhs[k][j], res[i][j]);
   return res;
 }
 
@@ -79,7 +79,7 @@ int rankMat(Matrix A) {
       A[r][k] = A[r][k] / A[r][i];
     for(int j = r+1; j < n; ++j)
       for(int k = m-1; k >= i; --k)
-        A[j][k] = A[j][k] - (A[r][k] * A[j][i]);
+        A[j][k] = fma(-A[r][k], A[j][i], A[j][k]);
     ++r;
   }
   return r;

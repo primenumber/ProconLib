@@ -54,7 +54,7 @@ pair<Matrix, vector<int>> LUPDecomposition(Matrix A) {
     for(int j=i+1; j < n; ++j) {
       A[j][i] /= A[i][i];
       for (int k = i+1; k < n; ++k)
-        A[j][k] -= A[i][k] * A[j][i];
+        A[j][k] = fma(-A[i][k], A[j][i], A[j][k]);
     }
   }
   return make_pair(A, perm);
@@ -66,11 +66,11 @@ Array LUPBackSubstitution(Matrix& LU, vector<int>& perm, Array a) {
   REP(i,n) tmp[i] = a[perm[i]];
   swap(tmp, a);
   REP(i,n) {
-    REP(j,i) a[i] -= a[j] * LU[i][j];
+    REP(j,i) a[i] = fma(-a[j], LU[i][j], a[i]);
   }
   for(int i=n-1; i >= 0; --i) {
     for(int j=i+1; j < n; ++j)
-      a[i] -= a[j] * LU[i][j];
+      a[i] = fma(-a[j], LU[i][j], a[i]);
     a[i] /= LU[i][i];
   }
   return a;
