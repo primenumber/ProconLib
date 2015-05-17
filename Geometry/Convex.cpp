@@ -21,3 +21,22 @@ VP ConvexCut(const VP &ps, L l) {
   }
   return Q;
 }
+
+// line expression of ax+by+c<0
+L make_line(ld a, ld b, ld c) {
+  P p1, p2;
+  if (abs(a) < eps) {
+    if (abs(b) < eps) {
+      if (c < 0) return (L){P(1e9, 0), P(1e9, 1e9)};
+      return (L){P(1e9, 1e9), P(1e9, 0)};
+    }
+    p1 = P(0, -c/b); p2 = P(1, -c/b);
+  }
+  else {
+    p1 = P(-c/a, 0); p2 = P((-b-c)/a, 1);
+  }
+  P p = (p2 - p1) * P(0, 1) + p1;
+  ld x = real(p), y = imag(p);
+  if (a * x + b * y + c < 0) return (L){p1, p2};
+  else return (L){p2, p1};
+}
