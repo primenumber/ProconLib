@@ -107,6 +107,24 @@ ld distance_tl(Plane t, Line l) {
   return res;
 }
 
+// new Plane
+
+struct Plane { Point p, v; };
+
+// Verified : AOJ2562
+
+const Point rnd = make_point(43.123984, 50.230909, 33.929898);
+
+Line intersect_plpl (Plane a, Plane b) {
+  Point p = cross(rnd, b.v), q = cross(rnd, a.v);
+  ld r1 = dot(a.p, a.v) / dot(p, a.v);
+  p = p * make_point(r1, r1, r1);
+  ld r2 = dot(b.p, b.v) / dot(q, b.v);
+  q = q * make_point(r2, r2, r2);
+  Point po = p + q;
+  return (Line){po, po + cross(a.v, b.v)};
+}
+
 // Sphere
 
 // Verified : AOJ1289
