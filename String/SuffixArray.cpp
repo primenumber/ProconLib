@@ -1,31 +1,59 @@
 struct SuffixArray {
-  const int MAXLG = 18;
-  int N, s;
-  vector<tuple<int,int,int>> L;
-  vector<int> inv;
-  vector<string> P;
-
-  SuffixArray(string A) {
-    N = A.size(); s = 1;
-    L.assign(N, make_tuple(0, 0, 0));
-    inv.assign(N, 0);
-    P.assign(MAXLG, string(N, ' ')); P[0] = A;
-    for (int c = 1; c < N; ++s, c <<= 1) {
-      REP(i,N) L[i] = make_tuple(P[s-1][i], (i+c<N ? P[s-1][i+c] : -1), i);
-      sort(ALL(L));
-      REP(i,N) {
-        int u, v, w, x, y, z; tie(u, v, w) = L[i-1]; tie(x, y, z) = L[i];
-        if (i > 0 && x == u && y == v) P[s][z] = P[s][w]; else P[s][z] = i;
-      }
+  struct SAComp {
+    const int h, *g;
+    SAComp(int h, int *g) : h(h), g(g) {;}
+    bool operator() (int a, int b) {
+      return a != b && (g[a] != g[b] ? g[a] < g[b] : g[a + h] < g[b + h]);
     }
-    REP(i,N) inv[P[s-1][i]] = i;
+  };
+
+  static const int SIZE = 256000;
+  int n;
+  char str[SIZE];
+  vector<int> sa, lcp;
+
+  SuffixArray(const string &t) : n(t.size()) {
+    strcpy(str, t.c_str());
+ 
+    // build SA
+    sa = vector<int>(n + 1);
+    int g[n+1], b[n+1];
+    REP(i,n+1) { sa[i] = i; g[i] = str[i]; }
+    b[0] = 0; b[n] = 0;
+    sort(sa.begin(), sa.end(), SAComp(0, g));
+    for (int h = 1; b[n] != n; h *= 2) {
+      SAComp comp(h, g);
+      sort(sa.begin(), sa.end(), comp);
+      REP(i,n) b[i+1] = b[i] + comp(sa[i], sa[i+1]);
+      REP(i,n+1) g[sa[i]] = b[i];
+    }
+
+    // build LCP
+    lcp = vector<int>(n+1);
+    int h = 0, b[n+1];
+    REP(i,n+1) b[sa[i]] = i;
+    REP(i,n+1) {
+      if (b[i]) {
+        for (int j = sa[b[i]-1]; j+h<n && i+h<n && str[j+h] == str[i+h]; ++h);
+        lcp[b[i]] = h;
+      }
+      else {
+        lcp[b[i]] = -1;
+      }
+      if (h > 0) --h;
+    }
   }
 
-  int lcp(int x, int y){
-    if (x == y) return N - x;
-    int ret = 0;
-    for (int k = s-1; k >= 0 && x < N && y < N; --k)
-      if(P[k][x] == P[k][y]) x += (1 << k), y += (1 << k), ret |= (1 << k);
-    return ret;
+  int find(string t) {
+    int m = t.size();
+    char p[m+1];
+    strcpy(p, t.c_str());
+    int left = -1, right = n + 1;
+    while (left + 1 < right) {
+      int mid = (left + right) / 2;
+      if (strncmp(str + sa[mid], p, m) < 0) left = mid;
+      else right = mid;
+    }
+    return strncmp(str + sa[right], p, m) == 0 ? sa[right] : -1;
   }
 };
