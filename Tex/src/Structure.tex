@@ -8,10 +8,12 @@
 \subsection{Segment Tree}
 デフォルトは Range Minimum Query．区間は半開区間で指定すること．
 \lstinputlisting{../Structure/SegmentTree.cpp}
-デフォルトは区間に足せる Range Sum Query．遅延伝播セグメント木である.
+デフォルトは区間に足せる Range Sum Query と Range Minimum Query．遅延伝播セグメント木である.
 \lstinputlisting{../Structure/SegmentTreeLazy.cpp}
 遅延伝播セグメント木の強いバージョン
 \lstinputlisting{../Structure/SegmentTreeLazyUniversal.cpp}
+必要な頂点だけ作って処理する RMQ．デフォルトでは $i$ 番目の要素は $i+1$ で初期化されている．
+\lstinputlisting{../Structure/SegmentTree2D.cpp}
 二次元セグメント木
 \lstinputlisting{../Structure/SegmentTree2D.cpp}
 
@@ -28,6 +30,10 @@ FenwickTree．デフォルトは Range Sum Query であり，
 \subsection{Slide-Min}
 スライド最小値．コンストラクタでスライド幅を指定すると，各クエリについて直前$w$個の最小値をO(1)で返す．
 \lstinputlisting{../Structure/SlideMin.cpp}
+
+\subsection{Skew Heap}
+meldが $O(\log N)$ でできる priority queue．
+\lstinputlisting{../Structure/SkewHeap.cpp}
 
 \subsection{Treap}
 Treap．乱択アルゴリズムを用いた平衡二分木である．
