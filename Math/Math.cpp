@@ -8,15 +8,15 @@ ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 // |x|+|y| -> min
 // x <= y
 ll extgcd(ll a, ll b, ll& x, ll& y) {
-  ll g = a; x = c / a; y = 0;
+  ll g = a; x = 1; y = 0;
   if (b) g = extgcd(b, a%b, y, x), y -= (a / b) * x;
   return g;
 }
 
 // cond: a>b
-// ax+bx=c
+// ax+by=c
 ll extgcd2(ll a, ll b, ll c, ll& x, ll& y) {
-  ll g = a; x = 1; y = 0;
+  ll g = a; x = c / a; y = 0;
   if (b) g = extgcd2(b, a%b, c%b, y, x), y += (c / b) - (a / b) * x;
   return g;
 }
@@ -24,6 +24,19 @@ ll extgcd2(ll a, ll b, ll c, ll& x, ll& y) {
 // a^-1 mod p
 ll inv(ll a,ll p){
   return ( a == 1 ? 1 : (1 - p*inv(p%a,a)) / a + p );
+}
+
+// A[i] * x = B (mod M[i])
+pair<ll,ll> linear_congruence(const vector<ll>& A, const vector<ll>& B, const vector<ll>& M) {
+  ll x = 0, m = 1;
+  for(ll i = 0; i < (int)M.size(); i++){
+    ll a = A[i] * m, b = B[i] - A[i] * x, d = __gcd(M[i], a);
+    if (b % d != 0) return make_pair(0, -1);
+    ll t = b / d * inv(a / d, M[i] / d) % (M[i] / d);
+    x = x + m * t;
+    m *= M[i] / d;
+  }
+  return make_pair(x % m, m);
 }
 
 // Combination (MOD)
