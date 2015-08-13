@@ -1,3 +1,5 @@
+// verified: AOJ DSL_2 A
+
 struct Data {
   int num;
   Data() : num(0x7FFFFFFF) {;}
@@ -9,13 +11,13 @@ inline Data Merge(Data left, Data right) {
 }
 
 struct SegmentTree {
-  static const int STsize = 1 << 18;
-  Data data[STsize]; int n;
-  SegmentTree(void) : n(STsize / 2) {}
+  int n; vector<Data> data;
+  SegmentTree(int N) : n(1 << N), data(n * 2) {}
   void update (int pos, Data value) {
     data[pos] = value;
     while (pos < 2*n-1) {
       int l = pos, r = pos^1;
+      if (l > r) swap(l, r);
       pos = pos / 2 + n;
       data[pos] = Merge(data[l], data[r]);
     }
