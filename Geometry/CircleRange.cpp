@@ -4,8 +4,8 @@ Range make_range(ld from, ld to) {
   Range v;
   if (to < from) swap(from , to);
   if (to - from > pi) {
-    v.emplace_back(0, from);
-    v.emplace_back(to, 2*pi);
+    v.emplace_back(-pi, from);
+    v.emplace_back(to, pi);
   }
   else {
     v.emplace_back(from, to);
