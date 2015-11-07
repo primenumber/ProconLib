@@ -71,10 +71,9 @@ inline Data Eval(Data data, Data lazy, int num) {
 }
 
 class SegmentTreeLazy {
-  static const int MAX_DEPTH = 16;
-  static const int STsize = 1 << MAX_DEPTH;
-  Data data[STsize], lazy[STsize];
-  bool flag[STsize]; int n;
+  int n;
+  vector<Data> data, lazy;
+  vector<bool> flag;
   void lazyset(int node, Data val) {
     if (flag[node]) lazy[node] = Set(lazy[node], val);
     else lazy[node] = val;
@@ -107,7 +106,12 @@ class SegmentTreeLazy {
     return Merge(l, r);
   }
 public:
-  SegmentTreeLazy(void) : n(STsize / 2) { REP(i,STsize) flag[i] = false; }
+  SegmentTreeLazy(int N) {
+    for (n = 1; n < N; n *= 2);
+    data.resize(n * 2), lazy.resize(n * 2);
+    flag.assign(n * 2, false);
+    REP(i,n*2) flag[i] = false;
+  }
   void update(int fr, int to, Data val) { update_sub(fr, to, 2*n-2, 0, n, val); }
   Data query(int fr, int to) { return query_sub(fr, to, 2*n-2, 0, n); }
 };

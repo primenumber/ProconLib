@@ -5,9 +5,8 @@ struct HeavyLightDecomposition {
     vector<pair<int, int> > child; // child chain number, parent index
     vector<int> mapfrom;
     // SegmentTree stree;
-    SegmentTreeLazy stree; //
-    // Chain() {;}
-    Chain (int N) : stree(N) {;}
+    Chain() {;}
+    // Chain (int N) : stree(N) {;}
   };
   Graph baseG;
   vector<Chain> chains;
@@ -40,7 +39,7 @@ private:
     bfs(from, parent, seq, size);
     const int c = chains.size();
     // chains.push_back(Chain((int)seq.size()));
-    chains.push_back(Chain((int)seq.size()));
+    chains.push_back(Chain());
     chains[c].depth = depth;
     chains[c].parent = make_pair(pnumber, pindex);
     REP(i,seq.size()) {
