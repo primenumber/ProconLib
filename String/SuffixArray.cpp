@@ -1,26 +1,25 @@
 struct SuffixArray {
   struct SAComp {
-    const int h, *g;
-    SAComp(int h, int *g) : h(h), g(g) {;}
+    const int h;
+    const vector<int> &g;
+    SAComp(int h, vector<int> &g) : h(h), g(g) {;}
     bool operator() (int a, int b) {
       return a != b && (g[a] != g[b] ? g[a] < g[b] : g[a + h] < g[b + h]);
     }
   };
 
-  static const int SIZE = 256000;
   int n;
-  char str[SIZE];
+  char *str;
   vector<int> sa, lcp;
 
-  SuffixArray(const string &t) : n(t.size()) {
+  SuffixArray(const string &t) : n(t.size()), sa(n+1), lcp(n+1) {
+    str = new char[n+1];
     strcpy(str, t.c_str());
- 
+
     // build SA
-    sa = vector<int>(n + 1);
-    int g[n+1], b[n+1];
+    vector<int> g(n+1, 0), b(n+1, 0);
     REP(i,n+1) { sa[i] = i; g[i] = str[i]; }
-    b[0] = 0; b[n] = 0;
-    sort(sa.begin(), sa.end(), SAComp(0, g));
+    sort(begin(sa), end(sa), SAComp(0, g));
     for (int h = 1; b[n] != n; h *= 2) {
       SAComp comp(h, g);
       sort(sa.begin(), sa.end(), comp);
@@ -29,8 +28,7 @@ struct SuffixArray {
     }
 
     // build LCP
-    lcp = vector<int>(n+1);
-    int h = 0, b[n+1];
+    int h = 0;
     REP(i,n+1) b[sa[i]] = i;
     REP(i,n+1) {
       if (b[i]) {
@@ -43,6 +41,7 @@ struct SuffixArray {
       if (h > 0) --h;
     }
   }
+  ~SuffixArray() { delete []str; }
 
   int find(string t) {
     int m = t.size();
