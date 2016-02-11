@@ -1,16 +1,19 @@
 #define MAX_V 500
+
 struct Edge{
   int src, dest;
   int cap, rev;
 };
+
 typedef vector<Edge> Edges;
 typedef vector<Edges> Graph;
+
 int d[MAX_V];
 int iter[MAX_V];
 
 void add_edge(Graph &g, int src, int dest, int cap) {
-  g[src].pb((Edge){src, dest, cap, g[dest].size()});
-  g[dest].pb((Edge){dest, src, 0, g[src].size() - 1});
+  g[src].push_back((Edge){src, dest, cap, (int)g[dest].size()});
+  g[dest].push_back((Edge){dest, src, 0, (int)g[src].size() - 1});
 }
 
 void bfs(Graph &g, int s) {
