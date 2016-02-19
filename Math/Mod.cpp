@@ -24,7 +24,7 @@ Mod operator^(Mod a, int n) {
   return res;
 }
 
-int inv(int a, int p) {
+ll inv(ll a, ll p) {
   return (a == 1 ? 1 : (1 - p * inv(p%a, a)) / a + p);
 }
 Mod operator/(Mod a, Mod b) { return a * Mod(inv(b, mod)); }
