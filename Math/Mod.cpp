@@ -3,7 +3,10 @@ const int mod = 1000000007;
 struct Mod {
   int n;
   Mod () : n(0) {;}
-  Mod (int n) : n(n) { if (n >= mod) n %= mod; }
+  Mod (int n) : n(n) {
+    if (n >= mod) n %= mod;
+    else if (n < 0) n = (n % mod + mod) % mod;
+  }
   operator int() { return n; }
 };
 
