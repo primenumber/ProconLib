@@ -22,6 +22,20 @@ VP ConvexCut(const VP &ps, L l) {
   return Q;
 }
 
+ld max_distance(const VP &ps) {
+  assert (ps.size() > 1);
+  VP g = ConvexHull(ps);
+  int n = g.size(), a = 0, b = 1;
+  ld res = abs(g[0] - g[1]);
+  while (a < n) {
+    P p1 = g[a%n], p2 = g[(a+1)%n];
+    P q1 = g[b%n], q2 = g[(b+1)%n];
+    if (arg((p2 - p1) / (q1 - q2)) > 0) ++b; else ++a;
+    res = max(res, abs(p1 - q1));
+  }
+  return res;
+}
+
 // line expression of ax+by+c<0
 L make_line(ld a, ld b, ld c) {
   P p1, p2;
