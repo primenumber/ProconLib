@@ -35,7 +35,7 @@ void bfs(Graph &g, int s) {
 
 int dfs(Graph &g, int v, int t, int f) {
   if (v == t) return f;
-  for (int i = iter[v]; i < g[v].size(); i++) {
+  for (int &i = iter[v]; i < g[v].size(); i++) {
     Edge &e = g[v][i];
     if (e.cap > 0 && d[v] < d[e.dest]) {
       int d = dfs(g, e.dest, t, min(f, e.cap));
