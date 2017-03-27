@@ -31,6 +31,7 @@ void recession(const Graph &g, vector<int> &res) {
     int v = que.front(); que.pop();
     int c = update(g, res, v);
     for (int i: rg[v]) {
+      if (res[i] != 0) continue;
       if (cnt[i] <= 0) continue;
       cnt[i] -= c;
       if (cnt[i] <= 0) que.push(i);
