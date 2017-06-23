@@ -1,4 +1,4 @@
-typedef int Weight;
+using Weight = int;
 struct Edge{
   	int src, dest;
   	int cap, rev;
@@ -6,10 +6,10 @@ struct Edge{
   	bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 //FordFulkerson(O(F|E|))-----------------------------------------------------------
 //ノード数|V|が必要
