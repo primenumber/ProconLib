@@ -16,7 +16,7 @@ struct UnionFind {
 
 struct UnionFind {
   vector<int> p;
-  UnionFind (int n) : parent(n, -1) {}
+  UnionFind (int n) : p(n, -1) {}
   int root(int x) { return p[x] < 0 ? x : p[x] = root(p[x]); }
   void merge(int x, int y) { if (root(x) != root(y)) p[root(y)] = x; }
 };
