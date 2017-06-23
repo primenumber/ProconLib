@@ -20,10 +20,10 @@ void add_edge(Graph &g, int src, int dest, int cap) {
 
 bool visited[V];
 int dfs(Graph &g, int v, int t, int f) {
-	int (v == t) return f;
+	if (v == t) return f;
 	visited[v] = true;
 	REP(i, g[v].size()) {
-		Edge e = g[v][i];
+		Edge& e = g[v][i];
 		if (!visited[e.dest] && e.cap > 0) {
 			int d = dfs(g, e.dest, t, min(f, e.cap));
 			if (d > 0) {
