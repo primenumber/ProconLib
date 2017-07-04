@@ -1,9 +1,11 @@
-SpMatrix scalar(int size, Data k) {
-  REP(i,size) mat[i][i] = k;
-  return mat;
+SpMat scalar(int size, Data k) {
+  SpMat res;
+  REP(i,size) res.emplace_back(make_pair(i, i), k);
+  return res;
 }
 
-Array CG_method_impl(const SpMatrix& A, const SpMatrix& A_t, const Array& b) {
+// Solve A^t * A * x = b
+Array CG_method_impl(const SpMat& A, const SpMat& A_t, const Array& b) {
   Array r_old = b;
   Array p_old = r_old;
   Array x(b.size(), Data(0));
@@ -21,30 +23,10 @@ Array CG_method_impl(const SpMatrix& A, const SpMatrix& A_t, const Array& b) {
   return x;
 }
 
-// solve System of linear equations
-Array CG_method(const SpMatrix& A, const SpArray& b, int n) {
-  SpMatrix A_t = transpose(A);
-  SpMatrix B; B[0] = b;
-  Array b_prime = mult(B, A, 1, n)[0]; //A^T * b^T = (b * A)^T
+// Solve System of linear equations
+// Solve least square problem when A is not full rank
+Array CG_method(const SpMat& A, const Array& b, int n) {
+  SpMat A_t = transpose(A);
+  Array b_prime = mult(b, A, n); //A^T * b^T = (b * A)^T
   return CG_method_impl(A, A_t, b_prime); // A^T * A * x^T = A^T * b^T
-}
-
-Data det(SpMatrix A) {
-  const int n = A.size();
-  Data D = Data(1);
-  for (int i = 0; i < n; ++i) {
-    int pivot = i;
-    while (!A.count(pivot) || !A[pivot].count(i)) ++pivot;
-    for (int j = pivot+1; j < n; ++j)
-      if (A.count(j) && A[j].count(i) && abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
-    swap(A[pivot], A[i]);
-    D = D * A[i][i] * Data(i != pivot ? -1 : 1);
-    if (is_zero(A[i][i])) break;
-    for(int j = i+1; j < n; ++j)
-      if (A.count(j) && A[j].count(i))
-        for(int k = n-1; k >= i; --k)
-          if (A[i].count(k))
-            A[j][k] = A[j][k] - A[i][k] * A[j][i] / A[i][i];
-  }
-  return D;
 }
