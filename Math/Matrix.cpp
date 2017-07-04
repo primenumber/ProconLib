@@ -1,6 +1,6 @@
-typedef long double Data;
-typedef vector<Data> Array;
-typedef vector<Array> Matrix;
+using Data = long double;
+using Array = vector<Data>;
+using Matrix = vector<Array>;
 
 bool is_zero(Data dat) { return (abs(dat) < eps); }
 

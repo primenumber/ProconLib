@@ -1,8 +1,8 @@
-typedef int Weight;
+using Weight = int;
 Weight INF = 1000000000;
 
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 int chromaticNumber(const Matrix &g) {
   int N = g.size();

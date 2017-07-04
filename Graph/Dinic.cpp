@@ -5,8 +5,8 @@ struct Edge{
   int cap, rev;
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
 
 int d[MAX_V];
 int iter[MAX_V];

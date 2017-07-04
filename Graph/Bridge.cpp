@@ -1,7 +1,7 @@
 struct Edge{ int src, dest; };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
 
 Edges edges;
 vector<vector<int> > connect;

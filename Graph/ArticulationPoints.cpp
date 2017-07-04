@@ -1,7 +1,7 @@
 #include <vector>
 #include <set>
 
-typedef int Weight;
+using Weight = int;
 struct Edge{
   int src, dest;
   bool operator < (const Edge &rhs) const {
@@ -9,8 +9,8 @@ struct Edge{
   }
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
 
 set<int> art;
 vector<set<Edge> > connect;

@@ -1,7 +1,7 @@
 #include <valarray>
 
-typedef long double ld;
-typedef valarray<ld> Point;
+using ld = long double;
+using Point = valarray<ld>;
 
 const ld eps = 1e-8, inf = 1e12;
 
