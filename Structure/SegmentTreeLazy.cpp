@@ -32,7 +32,7 @@ struct SegTreeLazy {
 
 // Verified : KOJ0093
 
-typedef int Data;
+using Data = int;
 
 struct StarrySky {
   static const int MAX_DEPTH = 18;

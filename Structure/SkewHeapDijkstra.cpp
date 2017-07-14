@@ -1,5 +1,5 @@
-typedef int Weight;
-typedef pair<Weight,int> Data;
+using Weight = int;
+using Data = pair<Weight,int>;
 
 Weight INF = 1000000000;
 struct Edge{
@@ -7,10 +7,10 @@ struct Edge{
   bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 void add_edge(Graph &g, int src, int dest, Weight weight) {
   g[src].push_back((Edge){src, dest, weight});

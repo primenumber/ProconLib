@@ -6,8 +6,8 @@ struct Edge{
 
 const int INF = 1000000000;
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
 bool visited[MAX_V];
 
 void add_edge(Graph &g, int src, int dest, int cap) {

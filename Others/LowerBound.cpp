@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 int N, K;
 int a[1024];
 

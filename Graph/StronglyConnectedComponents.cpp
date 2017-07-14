@@ -1,7 +1,7 @@
 struct Edge{ int src, dest; };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
 
 void add_edge(Graph &g, int from, int to) {
   g[from].push_back((Edge){from, to});

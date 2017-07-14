@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 vector<int> compressor(vector<Data> c) {
   const int n = c.size();
   vector<Data> v = c;

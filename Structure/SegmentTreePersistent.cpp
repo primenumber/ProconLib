@@ -2,7 +2,7 @@
 // Range add Range sum
 // Verified : AOJ2563
 
-typedef ll Data;
+using Data = ll;
 
 struct PST {
   Data val, lazy;

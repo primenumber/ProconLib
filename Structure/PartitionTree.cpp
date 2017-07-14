@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 struct PartitionTree {
   static const int size = 15;
   int n;

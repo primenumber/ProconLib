@@ -1,9 +1,9 @@
-typedef int Weight;
+using Weight = int;
 const Weight INF = 1000000000;
 struct Edge{ int src, dest; Weight weight; };
  
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 Weight shortestHamiltonPath(Matrix w, int s) {
   int n = w.size(), N = 1 << n;

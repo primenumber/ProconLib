@@ -1,8 +1,8 @@
 #include <complex>
 
-typedef long double ld;
-typedef complex<ld> P;
-typedef vector<P> VP;
+using ld = long double;
+using P = complex<ld>;
+using VP = vector<P>;
 const ld eps = 1e-8, pi = acos(-1.0);
 
 #define EQ(a,b) (abs((a)-(b))<eps)

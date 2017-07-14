@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 
 struct SlideMin {
   deque<pair<int,Data>> deq;

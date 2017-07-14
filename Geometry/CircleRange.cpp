@@ -1,4 +1,4 @@
-typedef vector<pair<ld,ld>> Range;
+using Range = vector<pair<ld,ld>>;
 
 Range make_range(ld from, ld to) {
   Range v;

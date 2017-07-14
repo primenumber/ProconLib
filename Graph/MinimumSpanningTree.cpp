@@ -1,10 +1,10 @@
-typedef int Weight;
+using Weight = int;
 struct Edge{
   int src, dest; Weight weight;
   bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
-typedef vector<Edge> Edges;
+using Edges = vector<Edge>;
 
 // Kruskal
 // N, operator <

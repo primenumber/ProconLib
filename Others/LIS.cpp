@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 const Data INF = 1000000000;
 
 vector<Data> lis(const vector<Data>& a) {

@@ -1,5 +1,5 @@
 // Light version
-typedef int Data;
+using Data = int;
 const int len = 1 << 18;
 
 struct BIT {

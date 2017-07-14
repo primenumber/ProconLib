@@ -1,7 +1,7 @@
-typedef int Weight;
+using Weight = int;
 Weight INF = 1000000000;
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 // StoerWagner (Verified: POJ2914)
 Weight global_minimum_cut(Matrix h) {

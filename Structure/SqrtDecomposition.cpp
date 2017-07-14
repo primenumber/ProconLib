@@ -1,4 +1,4 @@
-typedef int Data;
+using Data = int;
 
 const int num = 500;
 

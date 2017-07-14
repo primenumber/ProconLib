@@ -1,8 +1,8 @@
 // verified: ATC001 C
 
-typedef long long ll;
-typedef long double ld;
-typedef complex<ld> P;
+using ll = int64_t;
+using ld = long double;
+using P = complex<ld>;
 
 const ld pi = acos(-1.0);
 

@@ -21,6 +21,15 @@ Dinic
 \lstinputlisting{../Graph/BipartiteMatching.cpp}
 \lstinputlisting{../Graph/HopcroftKarp.cpp}
 
+\subsection{ハンガリアン法}
+\begin{itemize}
+  \item 二部完全グラフ$K_{n,n}$の最大重みマッチングを求める
+  \item \verb#m[i][j]#で左側頂点iと右側頂点jの間のコストを与える
+  \item x: 左側頂点に対応する右側頂点, y: 右側頂点に対応する左側頂点
+  \item 返り値は最大重みマッチングの重みの合計
+\end{itemize}
+\lstinputlisting{../Graph/Hungarian.cpp}
+
 \subsection{強連結成分分解}
 \begin{itemize}
   \item \verb#vector<int> g[], rg[]# : グラフと逆辺のグラフ．\verb#add_edge#関数で作る

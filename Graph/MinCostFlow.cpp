@@ -1,7 +1,7 @@
 #define MAX_V 10000
 int V;
 
-typedef int Weight;
+using Weight = int;
 const Weight INF = 1000000000;
 // const Weight eps = 1e-8;
 
@@ -12,10 +12,10 @@ struct Edge{
   bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 Weight h[MAX_V];                // potential
 Weight dist[MAX_V];             // minimum distance
@@ -29,7 +29,7 @@ void add_edge(Graph &g, int src, int dest, int cap, Weight weight) {
 Weight min_cost_flow(Graph &g, int s, int t, int f) {
   Weight res = 0; V = g.size();
   memset(h, 0, sizeof(h));
-  typedef pair<Weight, int> P;
+  using P = pair<Weight, int>;
   while (f > 0) {
     priority_queue<P, vector<P>, greater<P> > que;
     fill(dist, dist + V, INF);

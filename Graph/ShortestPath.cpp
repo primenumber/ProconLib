@@ -1,14 +1,14 @@
-typedef int Weight;
+using Weight = int;
 Weight INF = 1000000000;
 struct Edge{
   int src, dest; Weight weight;
   bool operator < (const Edge &rhs) const {return weight > rhs.weight;}
 };
 
-typedef vector<Edge> Edges;
-typedef vector<Edges> Graph;
-typedef vector<Weight> Array;
-typedef vector<Array> Matrix;
+using Edges = vector<Edge>;
+using Graph = vector<Edges>;
+using Array = vector<Weight>;
+using Matrix = vector<Array>;
 
 void add_edge(Graph &g, int src, int dest, Weight weight) {
   g[src].push_back((Edge){src, dest, weight});
@@ -18,7 +18,7 @@ void add_edge(Graph &g, int src, int dest, Weight weight) {
 void dijkstra(Graph &g, Array &d, int s) {
   d.assign(g.size(), INF);
   d[s] = 0;
-  typedef pair<Weight,int> P;
+  using P = pair<Weight,int>;
   priority_queue<P, vector<P>, greater<P> > que;
   que.push(P(0, s));
   while (!que.empty()) {
@@ -132,7 +132,7 @@ bool SPFA(const Graph &g, Array &d, int s) {
 void bfs01(Graph &g, vector<int> &d, int s) {
   d.assign(g.size(), INF);
   d[s] = 0;
-  typedef pair<Weight,int> P;
+  using P = pair<Weight,int>;
   deque<P> que;
   que.push_back(P(0, s));
   while (!que.empty()) {
