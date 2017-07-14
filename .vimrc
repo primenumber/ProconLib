@@ -1,5 +1,6 @@
 set number
 set showmatch
+set matchtime=1
 syntax on
 set tabstop=2
 set shiftwidth=2
