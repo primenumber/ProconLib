@@ -12,9 +12,11 @@ vector<int> MaximumIndependentSet(vector<bitset<MAX_V>>& g, bitset<MAX_V> usable
       usable[i] = false;
       usable &= ~g[i];
       res.push_back(i);
-    } else {
-      v = i;
     }
+  }
+  REP(i,n) {
+    if(!usable[i]) continue;
+    v = i;
   }
   if (v < 0) return res;
   usable[v] = false;
