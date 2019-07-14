@@ -42,7 +42,7 @@ public:
     vector<bool> res;
     REP(i, N) if (cmp[i] == cmp[i + N]) return res;
     REP(i, N) {
-      if (cmp[i] > cmp[N + i]) res.push_back(true);
+      if (cmp[i] < cmp[N + i]) res.push_back(true);
       else res.push_back(false);
     }
     return res;
