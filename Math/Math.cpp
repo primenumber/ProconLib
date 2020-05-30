@@ -1,7 +1,6 @@
 using ll=long long;
 
-// cond: a>b
-ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
+ll gcd(ll a,ll b){if(a<b)swap(a,b);return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 // ax+by=gcd(a,b)
