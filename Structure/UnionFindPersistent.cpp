@@ -46,19 +46,20 @@ PA *merge(PA *uf, int x, int y) {
   return res;
 }
 
-// int main() {
-//   int n, q;
-//   cin >> n >> q;
-//   PA *uf = create(n);
-//   while (q--) {
-//     int a, b, c;
-//     cin >> a >> b >> c;
-//     if (a) {
-//       cout << (root(uf, b) == root(uf, c)) << endl;
-//     }
-//     else {
-//       uf = merge(uf, b, c);
-//     }
-//   }
-//   return 0;
-// }
+//int main() {
+//  int n, q;
+//  cin >> n >> q;
+//  vector<PA*> vuf(q+1, nullptr);
+//  vuf[0] = create(n);
+//  for (int i = 0; i < q; ++i) {
+//    int t,k,u,v;
+//    cin >> t >> k >> u >> v;
+//    ++k;
+//    if (t == 0) {
+//      vuf[i+1] = merge(vuf[k], u, v);
+//    } else {
+//      cout << (root(vuf[k], u) == root(vuf[k], v)) << endl;
+//    }
+//  }
+//  return 0;
+//}
