@@ -39,9 +39,10 @@ PA *root(PA *uf, int x) {
 PA *merge(PA *uf, int x, int y) {
   PA *l = root(uf, x), *r = root(uf, y);
   if (l->p == r->p) return uf;
-  if (l->rank > r->rank) swap(l, r);
+  if (l->rank < r->rank) swap(l, r);
   int rank = l->rank + (l->rank == r->rank);
   PA *res = set_(uf, r->p, l->p, rank);
+  res = set_(res, l->p, l->p, rank);
   return res;
 }
 
