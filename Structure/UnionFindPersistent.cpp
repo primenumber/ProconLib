@@ -1,4 +1,4 @@
-// Verified AOJ (TLE)
+// Verified yosupo library-checker (Persistent UnionFind)
 
 struct PA {
   int p, rank;
