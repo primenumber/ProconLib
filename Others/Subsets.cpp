@@ -2,12 +2,12 @@ template <typename Data, typename BinaryOperation>
 vector<Data> sum_over_supersets(const vector<Data>& v, const size_t N, BinaryOperation op) {
   auto ans = v;
   for (size_t i = 0; i < N; ++i) {
-		for (size_t T = 0; T < (size_t(1) << N); ++T) {
-			if (((T >> i) & 1) == 0) {
-				ans[T] = op(ans[T], ans[T | (1 << i)]);
-			}
-		}
-	}
+    for (size_t T = 0; T < (size_t(1) << N); ++T) {
+      if (((T >> i) & 1) == 0) {
+        ans[T] = op(ans[T], ans[T | (1 << i)]);
+      }
+    }
+  }
   return ans;
 }
 
@@ -15,27 +15,27 @@ template <typename Data, typename BinaryOperation>
 vector<Data> sum_over_subsets(const vector<Data>& v, const size_t N, BinaryOperation op) {
   auto ans = v;
   for (size_t i = 0; i < N; ++i) {
-		for (size_t T = 0; T < (size_t(1) << N); ++T) {
-			if (((T >> i) & 1) == 1) {
-				ans[T] = op(ans[T], ans[T ^ (1 << i)]);
-			}
-		}
-	}
+    for (size_t T = 0; T < (size_t(1) << N); ++T) {
+      if (((T >> i) & 1) == 1) {
+        ans[T] = op(ans[T], ans[T ^ (1 << i)]);
+      }
+    }
+  }
   return ans;
 }
 
 template <typename Data, typename BinaryOperation>
 vector<Data> inverse_sum_over_supersets(const vector<Data>& v, const size_t N, BinaryOperation op) {
-	return sum_over_supersets(v, N, [&] (const auto& lhs, const auto &rhs) {
-		return op(lhs, -rhs);
-	});
+  return sum_over_supersets(v, N, [&] (const auto& lhs, const auto &rhs) {
+    return op(lhs, -rhs);
+  });
 }
 
 template <typename Data, typename BinaryOperation>
 vector<Data> inverse_sum_over_subsets(const vector<Data>& v, const size_t N, BinaryOperation op) {
-	return sum_over_subsets(v, N, [&] (const auto& lhs, const auto &rhs) {
-		return op(lhs, -rhs);
-	});
+  return sum_over_subsets(v, N, [&] (const auto& lhs, const auto &rhs) {
+    return op(lhs, -rhs);
+  });
 }
 
 size_t pop_count(size_t x) {
@@ -119,7 +119,7 @@ vector<Data> subset_conv(const vector<Data>& f, const vector<Data>& g, const siz
 //using namespace std;
 //
 //int main() {
-//	size_t N = 18;
+//  size_t N = 18;
 //  size_t len = 1 << N;
 //  random_device rd;
 //  mt19937 mt(rd());
